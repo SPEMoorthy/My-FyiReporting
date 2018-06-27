@@ -402,6 +402,7 @@
     <None Include="Images\document-new.png" />
     <None Include="Images\chart.png" />
     <None Include="Images\Image.png" />
+    <None Include="Images\dot.gif" />
     <Content Include="selecttool.gif" />
     <Content Include="html.gif" />
     <Content Include="image.gif" />

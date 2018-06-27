@@ -274,6 +274,9 @@ namespace fyiReporting.RdlDesign
                 case OutputPresentationType.HTML:
                     sfd.Filter = Strings.MDIChild_Export_Web_Page;
                     break;
+                case OutputPresentationType.DMP:
+                    sfd.Filter = Strings.Dot_Matrix_Printer;
+                    break;
                 case OutputPresentationType.MHTML:
                     sfd.Filter = Strings.MDIChild_Export_MHT;
                     break;

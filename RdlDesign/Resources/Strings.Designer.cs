@@ -19,7 +19,7 @@ namespace fyiReporting.RdlDesign.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -1193,6 +1193,15 @@ namespace fyiReporting.RdlDesign.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dot Matrix (*.dot|*.dot|All files (*.*)|*.*.
+        /// </summary>
+        internal static string Dot_Matrix_Printer {
+            get {
+                return ResourceManager.GetString("Dot_Matrix_Printer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report files (*.rdl)|*.rdl|All files (*.*)|*.*.
         /// </summary>
         internal static string DrillParametersDialog_bFile_Click_ReportFilesFilter {
@@ -1400,7 +1409,7 @@ namespace fyiReporting.RdlDesign.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only HTML, MHT, XML, CSV, RTF, DOC, Excel, TIF and PDF are allowed as Export types..
+        ///   Looks up a localized string similar to Only HTML, MHT, XML, CSV, RTF, DOC, Excel, TIF, PDF and DOT are allowed as Export types..
         /// </summary>
         internal static string MDIChild_Error_AllowedExportTypes {
             get {

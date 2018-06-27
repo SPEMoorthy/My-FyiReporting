@@ -932,6 +932,9 @@ namespace fyiReporting.RdlViewer
                     case OutputPresentationType.HTML:
                         _Report.RunRender(sg, OutputPresentationType.HTML);
                         break;
+                    case OutputPresentationType.DMP:
+                        _Report.RunRender(sg, OutputPresentationType.DMP);
+                        break;
                     case OutputPresentationType.MHTML:
                         _Report.RunRender(sg, OutputPresentationType.MHTML);
                         break;

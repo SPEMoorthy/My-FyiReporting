@@ -1079,6 +1079,10 @@ namespace fyiReporting.RdlDesign
             {
                 TifToolStripButton2.Enabled = bEnablePreview;
             }
+            if (DotToolStripButton1 != null)
+            {
+                DotToolStripButton1.Enabled = bEnablePreview;
+            }
             if (XmlToolStripButton2 != null)
             {
                 XmlToolStripButton2.Enabled = bEnablePreview;
@@ -1791,6 +1795,16 @@ namespace fyiReporting.RdlDesign
                 return;
 
             mc.Export(fyiReporting.RDL.OutputPresentationType.TIF);
+            return;
+        }
+
+        private void DotToolStripButton1_Click(object sender, EventArgs e)
+        {
+            MDIChild mc = this.ActiveMdiChild as MDIChild;
+            if (mc == null)
+                return;
+
+            mc.Export(fyiReporting.RDL.OutputPresentationType.DMP);
             return;
         }
 

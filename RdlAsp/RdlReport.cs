@@ -49,7 +49,8 @@ namespace fyiReporting.RdlAsp
 		private string _CSS=null;
 		private string _JavaScript=null;
 		private string _Html=null;
-		private string _Xml=null;
+        private string _Dot = null;
+        private string _Xml=null;
         private string _Csv = null;
         private byte[] _Object = null;
 		private string _ParameterHtml=null;
@@ -127,6 +128,8 @@ namespace fyiReporting.RdlAsp
                         return "xlsx";
                     case OutputPresentationType.RTF:
                         return "rtf";
+                    case OutputPresentationType.Dot:
+                        return "dot";
                     default:
 						return "html";
 				}
@@ -369,7 +372,12 @@ namespace fyiReporting.RdlAsp
 						_JavaScript = report.JavaScript;
 						_Html = sg.GetText();
 						break;
-					case OutputPresentationType.XML:
+
+                    case OutputPresentationType.Dot:
+                        _Dot = sg.GetText();
+                        break;
+
+                    case OutputPresentationType.XML:
 						_Xml = sg.GetText();
 						break;
                     case OutputPresentationType.CSV:

@@ -234,3 +234,5 @@ obj/
 /Examples/SampleApp/SampleReportApp/RdlEngineConfig.xml
 /Examples/SampleApp2-SetData/SampleApp2-SetData/RdlEngineConfig.Linux.xml
 /.vs
+/Examples/SampleDesignerControl/.vs/SampleDesignerControl/v15/Server/sqlite3
+/RdlDesign/.vs/RdlDesign/v15/Server/sqlite3

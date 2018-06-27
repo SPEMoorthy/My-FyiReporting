@@ -21,15 +21,15 @@ private System.ComponentModel.Container components = null;
             // lStatus
             // 
             this.lStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lStatus.Location = new System.Drawing.Point(0, 174);
+            this.lStatus.Location = new System.Drawing.Point(0, 172);
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(233, 13);
+            this.lStatus.Size = new System.Drawing.Size(233, 15);
             this.lStatus.TabIndex = 0;
             this.lStatus.Text = "Color";
             // 
             // ColorPickerPopup
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(233, 187);
             this.ControlBox = false;
@@ -44,12 +44,12 @@ private System.ComponentModel.Container components = null;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.Deactivate += new System.EventHandler(this.lbColors_Hide);
-            this.Load += new System.EventHandler(this.ColorPickerPopup_Load); 
+            this.Load += new System.EventHandler(this.ColorPickerPopup_Load);
             this.Shown += new System.EventHandler(this.ColorPickerPopup_Shown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ColorPickerPopup_KeyPress);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorPickerPopup_MouseMove);
             this.Leave += new System.EventHandler(this.lbColors_Hide);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorPickerPopup_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorPickerPopup_MouseMove);
             this.ResumeLayout(false);
 
 		}

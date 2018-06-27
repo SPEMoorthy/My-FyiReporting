@@ -222,6 +222,11 @@ namespace fyiReporting.RDL
                     ip = new RenderExcel(this, sg);
                     _Report.Run(ip);
                     break;
+                case OutputPresentationType.DMP:
+                    ip = new RenderDotMatrix(this, sg);
+                    _Report.Run(ip);
+                    break;
+
                 case OutputPresentationType.ASPHTML:
 				case OutputPresentationType.HTML:
 				default:

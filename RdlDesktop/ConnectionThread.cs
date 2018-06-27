@@ -247,7 +247,10 @@ namespace fyiReporting.RdlDesktop
 						if (ext != null)
 							stype = ext;
 						break;
-					case "html":
+                    case "dot":
+                        type = OutputPresentationType.Dot;
+                        break;
+                    case "html":
 						type = OutputPresentationType.HTML;
 						break;
 					default:

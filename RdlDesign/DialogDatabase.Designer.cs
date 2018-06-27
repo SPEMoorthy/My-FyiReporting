@@ -39,6 +39,7 @@ namespace fyiReporting.RdlDesign
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbEmpty = new System.Windows.Forms.RadioButton();
             this.rbChart = new System.Windows.Forms.RadioButton();
             this.rbMatrix = new System.Windows.Forms.RadioButton();
             this.rbList = new System.Windows.Forms.RadioButton();
@@ -65,6 +66,7 @@ namespace fyiReporting.RdlDesign
             this.label7 = new System.Windows.Forms.Label();
             this.tbConnection = new System.Windows.Forms.TextBox();
             this.ReportParameters = new System.Windows.Forms.TabPage();
+            this.reportParameterCtl1 = new fyiReporting.RdlDesign.ReportParameterCtl();
             this.DBSql = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.TabularGroup = new System.Windows.Forms.TabPage();
@@ -80,8 +82,6 @@ namespace fyiReporting.RdlDesign
             this.btnCancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
-            this.rbEmpty = new System.Windows.Forms.RadioButton();
-            this.reportParameterCtl1 = new fyiReporting.RdlDesign.ReportParameterCtl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -250,6 +250,12 @@ namespace fyiReporting.RdlDesign
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // rbEmpty
+            // 
+            resources.ApplyResources(this.rbEmpty, "rbEmpty");
+            this.rbEmpty.Name = "rbEmpty";
+            this.rbEmpty.CheckedChanged += new System.EventHandler(this.rbEmpty_CheckedChanged);
             // 
             // rbChart
             // 
@@ -429,6 +435,11 @@ namespace fyiReporting.RdlDesign
             this.ReportParameters.Name = "ReportParameters";
             this.ReportParameters.Tag = "parameters";
             // 
+            // reportParameterCtl1
+            // 
+            resources.ApplyResources(this.reportParameterCtl1, "reportParameterCtl1");
+            this.reportParameterCtl1.Name = "reportParameterCtl1";
+            // 
             // DBSql
             // 
             this.DBSql.Controls.Add(this.panel2);
@@ -527,7 +538,7 @@ namespace fyiReporting.RdlDesign
             this.rdlViewer1.SourceFile = null;
             this.rdlViewer1.SourceRdl = null;
             this.rdlViewer1.UseTrueMargins = true;
-            this.rdlViewer1.Zoom = 0.7061753F;
+            this.rdlViewer1.Zoom = 0.6798272F;
             this.rdlViewer1.ZoomMode = fyiReporting.RdlViewer.ZoomEnum.FitWidth;
             // 
             // btnCancel
@@ -549,17 +560,6 @@ namespace fyiReporting.RdlDesign
             resources.ApplyResources(this.btnOK, "btnOK");
             this.btnOK.Name = "btnOK";
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // rbEmpty
-            // 
-            resources.ApplyResources(this.rbEmpty, "rbEmpty");
-            this.rbEmpty.Name = "rbEmpty";
-            this.rbEmpty.CheckedChanged += new System.EventHandler(this.rbEmpty_CheckedChanged);
-            // 
-            // reportParameterCtl1
-            // 
-            resources.ApplyResources(this.reportParameterCtl1, "reportParameterCtl1");
-            this.reportParameterCtl1.Name = "reportParameterCtl1";
             // 
             // DialogDatabase
             // 

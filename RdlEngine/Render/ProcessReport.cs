@@ -49,6 +49,7 @@ namespace fyiReporting.RDL
         Excel,
         TIF,
         TIFBW,                   // black and white tif
+        DMP,
         Excel2003
     }
 

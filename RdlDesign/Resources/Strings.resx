@@ -995,7 +995,7 @@ the website https://github.com/majorsilence/My-FyiReporting.</value>
 {0}</value>
   </data>
   <data name="MDIChild_Error_AllowedExportTypes" xml:space="preserve">
-    <value>Only HTML, MHT, XML, CSV, RTF, DOC, Excel, TIF and PDF are allowed as Export types.</value>
+    <value>Only HTML, MHT, XML, CSV, RTF, DOC, Excel, TIF, PDF and DOT are allowed as Export types.</value>
   </data>
   <data name="Undo_Error_UnknownAction" xml:space="preserve">
     <value>Unknown Action</value>
@@ -1110,5 +1110,8 @@ the website https://github.com/majorsilence/My-FyiReporting.</value>
   </data>
   <data name="ReportNames_DescriptionDuplicateNameError" xml:space="preserve">
     <value>NameError: duplicate name: {0}, name of the node: {1}</value>
+  </data>
+  <data name="Dot_Matrix_Printer" xml:space="preserve">
+    <value>Dot Matrix (*.dot|*.dot|All files (*.*)|*.*</value>
   </data>
 </root>

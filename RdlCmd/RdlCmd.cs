@@ -373,8 +373,11 @@ namespace fyiReporting.RdlCmd
 						break;																  
 					case "mht": 
 						report.RunRender(sg, OutputPresentationType.MHTML);
-						break;																  
-					case "html": case "htm":
+						break;
+                    case "dot":
+                        report.RunRender(sg, OutputPresentationType.Dot);
+                        break;
+                    case "html": case "htm":
 						report.RunRender(sg, OutputPresentationType.HTML);
 						break;
                     case "csv":
