@@ -245,4 +245,162 @@ namespace fyiReporting.RDL
         {
         }
     }
+
+
+
+    static class EscCodes
+    {
+        public const string ESC = "\x1B";
+        public const string NUL = "\x00";
+        public const string ResetPrinter = ESC + "@";
+
+        public static string PageFormat(int nL, int nH, int mL, int mH)
+        {
+            return ESC + "(C" + nL.ToString() + nH.ToString() + mL.ToString() + mH.ToString();
+        }
+
+        public static string PageFormat(int nL, int nH, int tL, int tH, int bl,int bH)
+        {
+            return ESC + "(c" + nL.ToString() + nH.ToString() + tL.ToString() + tH.ToString() + bl.ToString() + bH.ToString();
+        }
+
+        public static string PageLengthInLines(byte noLines)
+        {
+            return ESC + "C" + noLines.ToString();
+        }
+
+        public static string PageLengthInInches(byte inch)
+        {
+            return ESC + "C" + NUL + inch.ToString();
+        }
+
+        public static string BottomMargin(byte n)
+        {
+            return ESC + "N" + n.ToString();
+        }
+
+        public const string CancelMargin = ESC + "O";
+
+        public static string RightMargin(byte n)
+        {
+            return ESC + "Q" + n.ToString();
+        }
+
+        public static string LeftMargin(byte n)
+        {
+            return ESC + "l" + n.ToString();
+        }
+
+        public const string CR = "\x0D";
+        public const string LF = "\x0A";
+        public const string FF = "\x0C";
+
+        public static string AbsHPossition(int nL, int nH)
+        {
+            return ESC + "$" + nL.ToString() + nH.ToString();
+        }
+
+        public static string RelHPossition(int nL, int nH)
+        {
+            return ESC + @"\" + nL.ToString() + nH.ToString();
+        }
+
+        public static string AbsVPossition(int nL, int nH, int mL, int mH)
+        {
+            return ESC + "(V" + nL.ToString() + nH.ToString() + mL.ToString() + mH.ToString();
+        }
+
+        public static string AdvancePrintPossitionV(byte n)
+        {
+            return ESC + "J" + n.ToString();
+        }
+
+        public const string HT = "\x09";
+        public const string VT = "\x0B";
+        public const string BS = "\x08";
+
+        public static string Skip(bool isVertical ,byte n)
+        {
+            int isV = isVertical ? 1 : 0;
+            return ESC + "f" + isV.ToString() + n.ToString();
+        }
+
+        public static string Unit(int nL, int nH, int m)
+        {
+           return ESC + "(U" + nL.ToString() + nH.ToString() + m.ToString();
+        }
+
+        public const string OneByEightInchLineSpacing = ESC + "0";
+        public const string OneBySixInchLineSpacing = ESC + "2";
+        public const string SevenBy72InchLineSpacing = ESC + "1";
+        public static string NBy216InchLineSpacing(byte n)
+        {
+            return ESC + "3" + n.ToString();
+        }
+        public static string NBy380InchLineSpacing(byte n)
+        {
+            return ESC + "+" + n.ToString();
+        }
+        public static string NBy60InchLineSpacing(byte n)
+        {
+            return ESC + "A" + n.ToString();
+        }
+
+        public static string HTabs(byte[] n)
+        {
+            String res = ESC + "D";
+            foreach(byte b in n) res += n;
+            res = res + NUL;
+            return res;
+        }
+
+        public static string VTabs(byte[] n)
+        {
+            String res = ESC + "B";
+            foreach (byte b in n) res += n;
+            res = res + NUL;
+            return res;
+        }
+        public static string VTabsVFU(byte[] n)
+        {
+            String res = ESC + "b";
+            foreach (byte b in n) res += n;
+            res = res + NUL;
+            return res;
+        }
+
+        public static string VTabVFU(byte m)
+        {
+            return ESC + "/" + m.ToString();
+        }
+        
+        /*
+        public enum Justify
+        {
+            FlushLeft = 0,
+            Centered = 1,
+            FlushRight = 2,
+            Full = 3
+        }*/
+
+        public static string Justify(byte n)
+        {
+            return ESC + "a" + n.ToString();
+        }
+
+        public static string AssignCharTable(int nL,int nH, int d1,int d2,int d3)
+        {
+            return ESC + "(t" + nL.ToString() + nH.ToString() + d1.ToString() + d2.ToString() + d3.ToString();
+        }
+
+        public static string SelectCharTable(int n)
+        {
+            return ESC + "t" + n.ToString();
+        }
+
+        public static string SelectInterNationalCharTable(int n)
+        {
+            return ESC + "R" + n.ToString();
+        }
+    }
 }

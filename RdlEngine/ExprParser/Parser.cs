@@ -933,8 +933,7 @@ namespace fyiReporting.RDL
 			if (args.Length >= indexOfScope)
 			{
 				string n = args[indexOfScope-1].EvaluateString(null, null);
-				if (idLookup.IsPageScope)
-					throw new ParserException(string.Format(Strings.Parser_ErrorP_ScopeNotSpecifiedInHeaderOrFooter,n));
+				//if (idLookup.IsPageScope) throw new ParserException(string.Format(Strings.Parser_ErrorP_ScopeNotSpecifiedInHeaderOrFooter,n));
 
 				scope = idLookup.LookupScope(n);
 				if (scope == null)
