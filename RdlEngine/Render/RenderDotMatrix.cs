@@ -58,12 +58,16 @@ namespace fyiReporting.RDL
 
         public void Start()
         {
-            tw.WriteLine("Dot Printing Start");
+            tw.Write(EscCodes.ResetPrinter
+                + EscCodes.DoubleStrike + EscCodes.DoubleWidth
+                );
         }
 
         public void End()
         {
-            tw.WriteLine("Dot Printing End");
+            tw.Write(
+                EscCodes.CancelDoubleWidth + EscCodes.CancelDoubleStrike + EscCodes.ResetPrinter
+               );
         }
 
         public void RunPages(Pages pgs)
@@ -401,6 +405,173 @@ namespace fyiReporting.RDL
         public static string SelectInterNationalCharTable(int n)
         {
             return ESC + "R" + n.ToString();
+        }
+
+        public static string SetUserDefinedChars(int n, int m, int a0, int a1, int a2, char[] chars)
+        {
+            String res = ESC + "&" + NUL + n.ToString() + m.ToString() + "[" + a0.ToString() + a1.ToString() + a2.ToString();
+            foreach (char c in chars) res += c;
+            res = res + "]";
+            return res;
+        }
+
+        public static string CopyROMtoRAM(bool isRoman, int m)
+        {
+            int isV = isRoman ? 0 : 1;
+            return ESC + ":" + NUL + isV.ToString() + m.ToString();
+        }
+
+        public static string SelectUserDefinedChars(int n)
+        {
+            return ESC + "%" + n.ToString();
+        }
+
+        public static string SelectLQOrDraft(bool isDraft)
+        {
+            int isV = isDraft ? 0 : 1;
+            return ESC + "x" + isV.ToString() ;
+        }
+
+        public static string SelectTypeface(int n)
+        {
+            return ESC + "k" + n.ToString();
+        }
+
+        public static string SelectFont(int m, int nL, int nH)
+        {
+            return ESC + "X" + nL.ToString() + nH.ToString();
+        }
+
+        public static string HMI(int nL, int nH)
+        {
+            return ESC + "c" + nL.ToString() + nH.ToString();
+        }
+
+        public const string _10CPI = ESC + "P";
+        public const string _12CPI = ESC + "M";
+        public const string _15CPI = ESC + "g";
+
+        public static string ProportionalMode(int n)
+        {
+            return ESC + "p" + n.ToString();
+        }
+
+        public static string InterCharSpace(int n)
+        {
+            return ESC + " " + n.ToString();
+        }
+
+        public static string MasterSelect(int n)
+        {
+            return ESC + "!" + n.ToString();
+        }
+
+        public const string BELL = ESC + "\x07";
+        public const string BOLD = ESC + "E";
+        public const string CancelBOLD = ESC + "F";
+        public const string Italic = ESC + "4";
+        public const string CancelItalic = ESC + "5";
+        public const string DoubleStrike = ESC + "G";
+        public const string CancelDoubleStrike = ESC + "H";
+        public const string Condensed = ESC + "\x0F";
+        public const string CancelCondensed = "\x12";
+        public const string DoubleWidth = ESC + "\x0E";
+        public const string CancelDoubleWidth = "\x14";
+        public const string DisablePaperOutDetector = ESC + "8";
+        public const string EnablePaperOutDetector = ESC + "9";
+
+
+
+        public static string Underline(bool isUnderLine)
+        {
+            int isV = isUnderLine ? 1 : 0;
+            return ESC + "-" + isV.ToString();
+        }
+
+        public static string SelectLineScore( int nL, int nH, int m, int d1, int d2)
+        {
+           
+            return ESC + "(-"+ nL.ToString() + nH.ToString() + m.ToString() + d1.ToString() + d2.ToString();
+        }
+
+        public static string SuperSubscipt(bool isSupescript)
+        {
+            int isV = isSupescript ? 1 : 0;
+            return ESC + "S" + isV.ToString();
+        }
+        public const string CancelSuperSubscipt = ESC + "T";
+
+        public static string SelectCharStyle(int n)
+        {
+            return ESC + "q" + n.ToString();
+        }
+
+        public static string DoubleWidthOnOff(bool flag)
+        {
+            int isV = flag ? 1 : 0;
+            return ESC + "W" + isV.ToString();
+        }
+
+        public static string DoubleHeightOnOff(bool flag)
+        {
+            int isV = flag ? 1 : 0;
+            return ESC + "w" + isV.ToString();
+        }
+
+        public static string PrintData(int nL, int nH, char[] chars)
+        {
+            string res = ESC + "(^" ;
+            foreach (char c in chars) res += c;
+            return res;
+        }
+
+        public const string PrintUpperControl9Pin = ESC + "6";
+        public const string PrintUpperControl = ESC + "7";
+        public const string SelectMSB0 = ESC + "=";
+        public const string SelectMSB1 = ESC + ">";
+        public const string CancelMSB = ESC + "#";
+        public static string EnablePrintControlCodes(int n)
+        {
+            return ESC + "I" + n.ToString();
+        }
+        public static string SelectPrintUpperControl(int n)
+        {
+            return ESC + "m" + n.ToString();
+        }
+
+        public static string PaperLoading(char n)
+        {
+            return ESC + "\x19" + n.ToString();
+        }
+
+        public static string SelectUniDirectional(bool flag)
+        {
+            int isV = flag ? 1 : 0;
+            return ESC + "U" + isV.ToString();
+        }
+
+        public const string UniDirectionOneLine = ESC + "<";
+
+        public static string LowSpeed(bool isLowSpeed)
+        {
+            int isV = isLowSpeed ? 1 : 0;
+            return ESC + "s" + isV.ToString();
+        }
+
+        public static string SelectGraphicsMode(int nL, int nH, int m )
+        {
+            return ESC + "(G" + nL.ToString() + nH.ToString() + m.ToString();
+        }
+
+        public static string SelectMicroWaveMode(bool flag)
+        {
+            int isV = flag ? 1 : 0;
+            return ESC + "(i0100" + isV.ToString();
+        }
+
+        public static string RevesePaperFeed(int n)
+        {
+            return ESC + "j" + n.ToString();
         }
     }
 }
