@@ -1193,15 +1193,6 @@ namespace fyiReporting.RdlDesign.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dot Matrix (*.dot|*.dot|All files (*.*)|*.*.
-        /// </summary>
-        internal static string Dot_Matrix_Printer {
-            get {
-                return ResourceManager.GetString("Dot_Matrix_Printer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Report files (*.rdl)|*.rdl|All files (*.*)|*.*.
         /// </summary>
         internal static string DrillParametersDialog_bFile_Click_ReportFilesFilter {
@@ -1423,6 +1414,15 @@ namespace fyiReporting.RdlDesign.Resources {
         internal static string MDIChild_Export_CSV {
             get {
                 return ResourceManager.GetString("MDIChild_Export_CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DMP file (*.dmp)|*.dmp|All files (*.*)|*.*.
+        /// </summary>
+        internal static string MDIChild_Export_DMP {
+            get {
+                return ResourceManager.GetString("MDIChild_Export_DMP", resourceCulture);
             }
         }
         

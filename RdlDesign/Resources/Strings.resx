@@ -1111,7 +1111,7 @@ the website https://github.com/majorsilence/My-FyiReporting.</value>
   <data name="ReportNames_DescriptionDuplicateNameError" xml:space="preserve">
     <value>NameError: duplicate name: {0}, name of the node: {1}</value>
   </data>
-  <data name="Dot_Matrix_Printer" xml:space="preserve">
-    <value>Dot Matrix (*.dot|*.dot|All files (*.*)|*.*</value>
+  <data name="MDIChild_Export_DMP" xml:space="preserve">
+    <value>DMP file (*.dmp)|*.dmp|All files (*.*)|*.*</value>
   </data>
 </root>

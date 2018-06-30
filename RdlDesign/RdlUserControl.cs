@@ -740,6 +740,9 @@ namespace fyiReporting.RdlDesign
 				case OutputPresentationType.MHTML:
 					sfd.Filter = Strings.MDIChild_Export_MHT;
 					break;
+                case OutputPresentationType.DMP:
+                    sfd.Filter = Strings.MDIChild_Export_DMP;
+                    break;
                 default:
                     throw new Exception(Strings.MDIChild_Error_AllowedExportTypes);
             }
@@ -1254,6 +1257,11 @@ namespace fyiReporting.RdlDesign
         private void TifToolStripButton2_Click(object sender, EventArgs e)
         {
             Export(fyiReporting.RDL.OutputPresentationType.TIF);
+        }
+
+        private void DMPToolStripButton1_Click(object sender, EventArgs e)
+        {
+            Export(fyiReporting.RDL.OutputPresentationType.DMP);
         }
 
         private void foreColorPicker1_Validated(object sender, EventArgs e)
