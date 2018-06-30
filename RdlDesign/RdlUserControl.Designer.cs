@@ -28,100 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RdlUserControl));
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.rdlEditPreview1 = new fyiReporting.RdlDesign.RdlEditPreview();
-			this.mainProperties = new fyiReporting.RdlDesign.PropertyCtl();
-			this.mainTB = new System.Windows.Forms.ToolStrip();
-			this.newToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.openToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.saveToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.cutToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.copyToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.pasteToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.undoToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.textboxToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.chartToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.tableToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.listToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.imageToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.matrixToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.subreportToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.rectangleToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.lineToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.fxToolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-			this.ctlEditTextbox = new System.Windows.Forms.ToolStripTextBox();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.boldToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.italiacToolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.underlineToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.leftAlignToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.centerAlignToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.rightAlignToolStripButton3 = new System.Windows.Forms.ToolStripButton();
-			this.fontToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-			this.fontSizeToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-			this.printToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.zoomToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-			this.selectToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.pdfToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.htmlToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.excelToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.XmlToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.MhtToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.CsvToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.RtfToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.TifToolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.ButtonShowProperties = new System.Windows.Forms.ToolStripButton();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.foreColorPicker1 = new fyiReporting.RdlDesign.ColorPicker();
-			this.backColorPicker1 = new fyiReporting.RdlDesign.ColorPicker();
-			this.mainTC = new System.Windows.Forms.TabControl();
-			if (fyiReporting.RDL.Utility.Runtime.IsMono == false)
-			{
-				((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			}
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			this.mainTB.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
-			this.panel1.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// splitContainer1
-			// 
-			resources.ApplyResources(this.splitContainer1, "splitContainer1");
-			this.splitContainer1.Name = "splitContainer1";
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.rdlEditPreview1);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.mainProperties);
-			// 
-			// rdlEditPreview1
-			// 
-			this.rdlEditPreview1.CurrentInsert = null;
-			resources.ApplyResources(this.rdlEditPreview1, "rdlEditPreview1");
-			this.rdlEditPreview1.Modified = false;
-			this.rdlEditPreview1.Name = "rdlEditPreview1";
-			this.rdlEditPreview1.SelectedText = "";
-			this.rdlEditPreview1.SelectionTool = false;
-			this.rdlEditPreview1.Zoom = 1F;
-			this.rdlEditPreview1.ZoomMode = fyiReporting.RdlViewer.ZoomEnum.UseZoom;
-			// 
-			// mainProperties
-			// 
-			resources.ApplyResources(this.mainProperties, "mainProperties");
-			this.mainProperties.Name = "mainProperties";
-			// 
-			// mainTB
-			// 
-			this.mainTB.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RdlUserControl));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.rdlEditPreview1 = new fyiReporting.RdlDesign.RdlEditPreview();
+            this.mainProperties = new fyiReporting.RdlDesign.PropertyCtl();
+            this.mainTB = new System.Windows.Forms.ToolStrip();
+            this.newToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.openToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.cutToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.copyToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.pasteToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.undoToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.textboxToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.chartToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tableToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.listToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.imageToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.matrixToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.subreportToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.rectangleToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.lineToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.fxToolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.ctlEditTextbox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.boldToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.italiacToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.underlineToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.leftAlignToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.centerAlignToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.rightAlignToolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.fontToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.fontSizeToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.printToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.zoomToolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.selectToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.pdfToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.htmlToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.excelToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.XmlToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.MhtToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.CsvToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.RtfToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.TifToolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.ButtonShowProperties = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.foreColorPicker1 = new fyiReporting.RdlDesign.ColorPicker();
+            this.backColorPicker1 = new fyiReporting.RdlDesign.ColorPicker();
+            this.mainTC = new System.Windows.Forms.TabControl();
+            this.DMPToolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            if (fyiReporting.RDL.Utility.Runtime.IsMono == false)
+            {
+                ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            }
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.mainTB.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.rdlEditPreview1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.mainProperties);
+            // 
+            // rdlEditPreview1
+            // 
+            this.rdlEditPreview1.CurrentInsert = null;
+            resources.ApplyResources(this.rdlEditPreview1, "rdlEditPreview1");
+            this.rdlEditPreview1.Modified = false;
+            this.rdlEditPreview1.Name = "rdlEditPreview1";
+            this.rdlEditPreview1.SelectedText = "";
+            this.rdlEditPreview1.SelectionTool = false;
+            this.rdlEditPreview1.Zoom = 1F;
+            this.rdlEditPreview1.ZoomMode = fyiReporting.RdlViewer.ZoomEnum.UseZoom;
+            // 
+            // mainProperties
+            // 
+            resources.ApplyResources(this.mainProperties, "mainProperties");
+            this.mainProperties.Name = "mainProperties";
+            // 
             // mainTB
             // 
             this.mainTB.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
