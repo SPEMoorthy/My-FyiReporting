@@ -26,6 +26,7 @@ using fyiReporting.RDL;
 using System.IO;
 using System.Collections;
 using System.Text;
+using System.Collections.Generic;
 
 namespace fyiReporting.RDL
 {
@@ -37,11 +38,12 @@ namespace fyiReporting.RDL
     {
         Report report;					// report
         TextWriter tw;				// where the output is going
-
+        List<String> dmpOut;
         public RenderDotMatrix(Report report, IStreamGen sg)
         {
             this.report = report;
             tw = sg.GetTextWriter();
+            dmpOut = new List<string>();
         }
 
         public void Dispose() { } 
@@ -58,16 +60,38 @@ namespace fyiReporting.RDL
 
         public void Start()
         {
-            tw.Write(EscCodes.ResetPrinter
-                + EscCodes.DoubleStrike + EscCodes.DoubleWidth
-                );
+            StringBuilder startStr = new StringBuilder();
+            //Send an ESC @ command to initialize the printer
+            startStr.Append(EscCodes.ResetPrinter);
+
+            //Select 10-cpi printing (character width of 1/10 inch)
+            startStr.Append(EscCodes._10CPI);
+            int CPI = 10;
+
+            //Set Left and right margin from report
+            RSize rptWidth = report.ReportDefinition.PageWidth;
+            RSize lM= report.ReportDefinition.LeftMargin;
+            RSize rM = report.ReportDefinition.RightMargin;
+
+            int noOfCharPerLine = (int)((rptWidth.Size / RSize.PARTS_PER_INCH) * CPI);
+            int noOfCharLeftMargin = (int)((lM.Size / RSize.PARTS_PER_INCH) * CPI);
+            int noOfCharRightMargin = (int)((rM.Size / RSize.PARTS_PER_INCH) * CPI);
+
+            startStr.Append(EscCodes.LeftMargin(noOfCharLeftMargin));            
+            startStr.Append(EscCodes.RightMargin(noOfCharPerLine - noOfCharRightMargin));
+
+
+            //Set Page Length
+            RSize rptHeight = report.ReportDefinition.PageHeight;
+            int rptHeightinInches = (int)(rptHeight.Size / RSize.PARTS_PER_INCH);
+            startStr.Append(EscCodes.PageLengthInInches(rptHeightinInches));
+
+           tw.Write(startStr.ToString());
         }
 
         public void End()
         {
-            tw.Write(
-                EscCodes.CancelDoubleWidth + EscCodes.CancelDoubleStrike + EscCodes.ResetPrinter
-               );
+            tw.Write(EscCodes.ResetPrinter);
         }
 
         public void RunPages(Pages pgs)
@@ -102,8 +126,7 @@ namespace fyiReporting.RDL
 
         public void Textbox(Textbox tb, string t, Row r)
         {
-            object value = tb.Evaluate(report, r);
-            tw.Write(value);
+            tw.Write(t);
         }	
         
         public void DataRegionNoRows(DataRegion d, string noRowsMsg)
@@ -273,7 +296,7 @@ namespace fyiReporting.RDL
             return ESC + "C" + noLines.ToString();
         }
 
-        public static string PageLengthInInches(byte inch)
+        public static string PageLengthInInches(int inch)
         {
             return ESC + "C" + NUL + inch.ToString();
         }
@@ -285,12 +308,12 @@ namespace fyiReporting.RDL
 
         public const string CancelMargin = ESC + "O";
 
-        public static string RightMargin(byte n)
+        public static string RightMargin(int n)
         {
             return ESC + "Q" + n.ToString();
         }
 
-        public static string LeftMargin(byte n)
+        public static string LeftMargin(int n)
         {
             return ESC + "l" + n.ToString();
         }
