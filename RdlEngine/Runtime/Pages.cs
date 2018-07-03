@@ -518,7 +518,7 @@ namespace fyiReporting.RDL
         #endregion
 	}
 
-	public class PageImage : PageItem, ICloneable
+    public class PageImage : PageItem, ICloneable
 	{
 		string name;				// name of object if constant image
 		ImageFormat imf;			// type of image; png, jpeg are supported
@@ -676,7 +676,6 @@ namespace fyiReporting.RDL
         #endregion
     }
 
-
     public class PagePolygon : PageItem, ICloneable
     {
         PointF[] Ps;
@@ -785,4 +784,113 @@ namespace fyiReporting.RDL
 
 		#endregion
 	}
+
+    public class DMPItem
+    {
+        public const float POINTSIZE_F = 72.27f;
+        float x;                // x coordinate
+        float y;                // y coordinate       
+        float w;                // width   --- line redefines as X2
+        float h;                // height  --- line redefines as Y2
+        int r;                  // Row number of the page
+        int c;                  // Column number of the page
+        string text;            // Text
+        int cpi;                // Char Per Inch
+        int lpi;                // Line Per Inch
+        int wc;                 // Width in terms of char size
+        FontWeightEnum fw;      // Font Weight;
+        public float X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public float Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
+        public float H
+        {
+            get { return h; }
+            set { h = value; }
+        }
+
+        public float W
+        {
+            get { return w; }
+            set { w = value; }
+        }
+
+        public int R
+        {
+            get { return r; }
+            set { r = value; }
+        }
+
+        public int C
+        {
+            get { return c; }
+            set { c = value; }
+        }
+
+        public string Text
+        {
+            get { return text; }
+            set { text = value; }
+        }
+
+        public int CPI
+        {
+            get { return cpi; }
+            set { cpi = value; }
+        }
+
+        public int LPI
+        {
+            get { return lpi; }
+            set { lpi = value; }
+        }
+
+        public int WC
+        {
+            get { return wc; }
+            set { wc = value; }
+        }
+
+        public FontWeightEnum FW
+        {
+            get { return fw; }
+            set { fw = value; }
+        }
+
+        public DMPItem(float x,float y,float w,float h, int cpi, int lpi,string text, FontWeightEnum fw)
+        {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.cpi = cpi;
+            this.lpi = lpi;
+            this.text = text;
+            this.fw = fw;
+            this.c = (int)Math.Ceiling(x / (POINTSIZE_F / cpi));
+            this.r = (int)Math.Ceiling(y / (POINTSIZE_F / lpi));
+            this.wc = (int)Math.Ceiling(w / (POINTSIZE_F / cpi));
+        }
+
+        //Block default constructor
+        private DMPItem(){}
+
+        public override string ToString()
+        {
+            string dmpTxt = text.PadLeft(wc);
+
+            if (fw == FontWeightEnum.Bold) dmpTxt = EscCodes.BOLD + dmpTxt + EscCodes.CancelBOLD;
+
+            return dmpTxt;
+        }
+    }
+
 }
