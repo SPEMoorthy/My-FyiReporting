@@ -795,10 +795,10 @@ namespace fyiReporting.RDL
         int r;                  // Row number of the page
         int c;                  // Column number of the page
         string text;            // Text
-        int cpi;                // Char Per Inch
-        int lpi;                // Line Per Inch
+        float cpi;                // Char Per Inch
+        float lpi;                // Line Per Inch
         int wc;                 // Width in terms of char size
-        FontWeightEnum fw;      // Font Weight;
+        StyleInfo si;      // Font Weight;
         public float X
         {
             get { return x; }
@@ -841,13 +841,13 @@ namespace fyiReporting.RDL
             set { text = value; }
         }
 
-        public int CPI
+        public float CPI
         {
             get { return cpi; }
             set { cpi = value; }
         }
 
-        public int LPI
+        public float LPI
         {
             get { return lpi; }
             set { lpi = value; }
@@ -859,25 +859,40 @@ namespace fyiReporting.RDL
             set { wc = value; }
         }
 
-        public FontWeightEnum FW
+        public StyleInfo SI
         {
-            get { return fw; }
-            set { fw = value; }
+            get { return si; }
+            set { si = value; }
         }
 
-        public DMPItem(float x,float y,float w,float h, int cpi, int lpi,string text, FontWeightEnum fw)
+        public DMPItem(float x,float y,float w,float h, int lpi,string text, StyleInfo si)
         {
             this.x = x;
             this.y = y;
             this.w = w;
             this.h = h;
-            this.cpi = cpi;
+            this.cpi = SelectCPI(si.FontSize);
             this.lpi = lpi;
             this.text = text;
-            this.fw = fw;
-            this.c = (int)Math.Ceiling(x / (POINTSIZE_F / cpi));
+            this.si = si;
+            this.c = (int)Math.Ceiling(x / (POINTSIZE_F / 10)); //Calculate Column based on 10CPI Size
             this.r = (int)Math.Ceiling(y / (POINTSIZE_F / lpi));
             this.wc = (int)Math.Ceiling(w / (POINTSIZE_F / cpi));
+        }
+
+        private float SelectCPI(float fontSize)
+        {
+            int fSize = (int)Math.Round(fontSize, 0);
+            float CPI = 10;
+            if (fSize < 8) CPI = 20;
+            if (fSize == 8) CPI = 17;
+            if (fSize == 9) CPI = 15;
+            if (fSize == 10) CPI = 12;
+            if (fSize == 11 || fSize == 12) CPI = 10;
+            if (fSize == 13 ) CPI = 7.5f;
+            if (fSize == 14 || fSize == 15) CPI = 6;
+            if (fSize > 15) CPI = 5;
+            return CPI;
         }
 
         //Block default constructor
@@ -885,11 +900,79 @@ namespace fyiReporting.RDL
 
         public override string ToString()
         {
-            string dmpTxt = text.PadLeft(wc);
+            //Trim if Width is Exceeds
+            if (Text.Length > WC)
+                Text = Text.Substring(0, WC);
 
-            if (fw == FontWeightEnum.Bold) dmpTxt = EscCodes.BOLD + dmpTxt + EscCodes.CancelBOLD;
+            //Set Align
+            string dmpTxt = Align(Text, WC, SI.TextAlign);
+            
+            //Set Type Space
+            //String typeSpace = EscCodes.SelectTypeface(4);
+            //if (SI.FontFamily.Contains("Courier")) typeSpace = EscCodes.SelectTypeface(2);
+            //if(SI.FontFamily.Contains("Roman")) typeSpace = EscCodes.SelectTypeface(0);
+            //if(SI.FontFamily.Contains("serif")) typeSpace = EscCodes.SelectTypeface(1);
+            //if(SI.FontFamily.Contains("Script")) typeSpace = EscCodes.SelectTypeface(4);
+            //dmpTxt = typeSpace + dmpTxt;
+            
+            
+            //Bold
+            if (SI.FontWeight == FontWeightEnum.Bold) dmpTxt = EscCodes.BOLD + dmpTxt + EscCodes.CancelBOLD;
 
-            return dmpTxt;
+            //Italic
+            if(SI.FontStyle == FontStyleEnum.Italic) dmpTxt = EscCodes.Italic + dmpTxt + EscCodes.CancelItalic;
+
+            //Set font size and  Pitch
+            switch (CPI)
+            {
+                case 20:
+                    dmpTxt = EscCodes._12CPI + EscCodes.Condensed + dmpTxt + EscCodes.CancelCondensed;
+                    break;
+                case 17:
+                    dmpTxt = EscCodes._10CPI + EscCodes.Condensed + dmpTxt + EscCodes.CancelCondensed;
+                    break;
+                case 15:
+                    dmpTxt = EscCodes._15CPI + dmpTxt;
+                    break;
+                case 12:
+                    dmpTxt = EscCodes._12CPI + dmpTxt;
+                    break;
+                case 7.5f:
+                    dmpTxt = EscCodes.DoubleWidthOnOff(true) + EscCodes._15CPI + dmpTxt + EscCodes.DoubleWidthOnOff(false);
+                    break;
+                case 6:
+                    dmpTxt = EscCodes.DoubleWidthOnOff(true) + EscCodes._12CPI + dmpTxt + EscCodes.DoubleWidthOnOff(false);
+                    break;
+                case 5:
+                    dmpTxt = EscCodes.DoubleWidthOnOff(true) + EscCodes._10CPI + dmpTxt + EscCodes.DoubleWidthOnOff(false);
+                    break;
+                case 10:
+                default:
+                    dmpTxt = EscCodes._10CPI + dmpTxt;
+                    break;
+            }
+
+            return (dmpTxt);
+        }
+
+        private string Align(string str, int size, TextAlignEnum txtAlign)
+        {
+            switch (txtAlign)
+            {
+                case TextAlignEnum.Left:
+                    str = str.PadRight(size);
+                    break;
+                case TextAlignEnum.Center:
+                    int fillLength = size - str.Length;
+                    int halfFillLength = fillLength / 2;
+                    str = str.PadLeft(str.Length + halfFillLength);
+                    str = str.PadRight(size);
+                    break;
+                case TextAlignEnum.Right:
+                    str = str.PadLeft(size);
+                    break;
+            }
+            return str;
         }
     }
 

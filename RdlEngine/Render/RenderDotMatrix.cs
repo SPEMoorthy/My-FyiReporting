@@ -109,7 +109,11 @@ namespace fyiReporting.RDL
             int rptHeightinInches = (int)(rptHeight.Size / RSize.PARTS_PER_INCH);
             startStr.Append(EscCodes.PageLengthInInches(rptHeightinInches));
 
+            /*
+            //Set Print Quality
+            startStr.Append(EscCodes.SelectLQOrDraft(false));
             tw.Write(startStr.ToString());
+            */
             #endregion
 
             List<DMPItem> lstDmpItems = new List<DMPItem>();
@@ -119,7 +123,7 @@ namespace fyiReporting.RDL
                 if (pi is PageText)
                 {
                     PageText pt = pi as PageText;
-                    lstDmpItems.Add(new DMPItem(pt.X, pt.Y, pt.W, pt.H,CPI,LPI,pt.Text,pt.SI.FontWeight));
+                    lstDmpItems.Add(new DMPItem(pt.X, pt.Y, pt.W, pt.H,LPI,pt.Text,pt.SI));
                     continue;
                 }
                 #region OtherItems
