@@ -957,6 +957,7 @@ namespace fyiReporting.RDL
 
         private string Align(string str, int size, TextAlignEnum txtAlign)
         {
+            size = size - 1;
             switch (txtAlign)
             {
                 case TextAlignEnum.Left:
@@ -971,8 +972,11 @@ namespace fyiReporting.RDL
                 case TextAlignEnum.Right:
                     str = str.PadLeft(size);
                     break;
+                default:
+                    str = str.PadRight(size);
+                    break;
             }
-            return str;
+            return " " + str; //Space for padding
         }
     }
 

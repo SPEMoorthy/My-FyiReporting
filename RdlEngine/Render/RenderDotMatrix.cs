@@ -107,13 +107,14 @@ namespace fyiReporting.RDL
             //Set Page Length
             RSize rptHeight = r.ReportDefinition.PageHeight;
             int rptHeightinInches = (int)(rptHeight.Size / RSize.PARTS_PER_INCH);
-            startStr.Append(EscCodes.PageLengthInInches(rptHeightinInches));
+            startStr.Append(EscCodes.PageLengthInInches((rptHeightinInches)));
 
-            /*
+            
             //Set Print Quality
-            startStr.Append(EscCodes.SelectLQOrDraft(false));
+            startStr.Append(EscCodes.SelectLQOrDraft(true));
+            
+
             tw.Write(startStr.ToString());
-            */
             #endregion
 
             List<DMPItem> lstDmpItems = new List<DMPItem>();
@@ -382,13 +383,33 @@ namespace fyiReporting.RDL
                 #endregion
             }
 
-            var grpLines = from dmpItm in lstDmpItems.OrderBy(q=>q.R).ThenBy(q=>q.C)
+            //Sort Dmp Items
+            lstDmpItems = lstDmpItems.OrderBy(q => q.R).ThenBy(q => q.C).ToList();
+
+            //If page begins with nth line... Fill n-1 empty lines.
+            DMPItem fstItm = lstDmpItems.FirstOrDefault();
+            if (fstItm != null && fstItm.Y > 0)
+            {
+                for (int i = (fstItm.R - 1); i > 0; i--) tw.Write(EscCodes.CRLF);
+            }
+
+
+            var grpLines = from dmpItm in lstDmpItems
                            group dmpItm by dmpItm.R into newgrpDmpItm
                            select newgrpDmpItm;
 
             foreach(var dmpLine in grpLines)
             {
                 StringBuilder strLine = new StringBuilder();
+                DMPItem firstItm = dmpLine.FirstOrDefault();
+                if(firstItm != null && firstItm.X > lM.Points)
+                {
+                   int wcin10CPI = (int)Math.Ceiling((firstItm.X-lM.Points) / (72.27f / 10));
+                    String str = "";
+                    str = str.PadLeft(wcin10CPI);
+                    strLine.Append(EscCodes._10CPI + str);
+                }
+
                 foreach (DMPItem dmpTxt in dmpLine)
                 {
                     strLine.Append(dmpTxt);
@@ -590,14 +611,32 @@ namespace fyiReporting.RDL
             return ESC + "(c" + nL.ToString() + nH.ToString() + tL.ToString() + tH.ToString() + bl.ToString() + bH.ToString();
         }
 
-        public static string PageLengthInLines(byte noLines)
+        public static string PageLengthInLines(int noLines)
         {
             return ESC + "C" + noLines.ToString();
         }
 
         public static string PageLengthInInches(int inch)
         {
-            return ESC + "C" + NUL + inch.ToString();
+
+            int intValue = 182;
+            // Convert integer 182 as a hex in a string variable
+            byte[] hexValue = BitConverter.GetBytes(inch);
+
+            string str = ESC + "C" + NUL + ConvertUnicodeString("U+0006");
+           return str;
+        }
+
+        public static String ConvertUnicodeString(String str)
+        {
+            String result = "";
+            String[] uCodes = str.Split("U+".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (String uStr in uCodes)
+            {
+                int c = int.Parse(uStr, System.Globalization.NumberStyles.HexNumber);
+                result += (char)c;
+            }
+            return result;
         }
 
         public static string BottomMargin(byte n)

@@ -1533,11 +1533,11 @@ namespace fyiReporting.RdlDesign
 		public static List<string> ArrayToFormattedList(IEnumerable<string> array, string frontCap, string endCap)
 		{
 			List<string> returnList = new List<string>(array);
-
-			returnList.ForEach(
+            List<string> returnListCopy = new List<string>(array);
+            returnListCopy.ForEach(
 			delegate(string item)
 			{
-				returnList[returnList.IndexOf(item)] =
+				returnList[returnListCopy.IndexOf(item)] =
 				item.StartsWith("=") ?
 				string.Format("{0}{1}{2}",
 				frontCap,
