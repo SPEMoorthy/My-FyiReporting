@@ -901,19 +901,19 @@ namespace fyiReporting.RDL
         public override string ToString()
         {
             //Trim if Width is Exceeds
-            if (Text.Length > WC)
-                Text = Text.Substring(0, WC);
+            if (Text.Length > (WC-1))
+                Text = Text.Substring(0, (WC-1));
 
             //Set Align
-            string dmpTxt = Align(Text, WC, SI.TextAlign);
+            string dmpTxt = Align(Text, (WC-1), SI.TextAlign);
             
             //Set Type Space
-            //String typeSpace = EscCodes.SelectTypeface(4);
-            //if (SI.FontFamily.Contains("Courier")) typeSpace = EscCodes.SelectTypeface(2);
-            //if(SI.FontFamily.Contains("Roman")) typeSpace = EscCodes.SelectTypeface(0);
-            //if(SI.FontFamily.Contains("serif")) typeSpace = EscCodes.SelectTypeface(1);
-            //if(SI.FontFamily.Contains("Script")) typeSpace = EscCodes.SelectTypeface(4);
-            //dmpTxt = typeSpace + dmpTxt;
+            String typeSpace = EscCodes.SelectTypeface(4);
+            if (SI.FontFamily.Contains("Courier")) typeSpace = EscCodes.SelectTypeface(2);
+            if(SI.FontFamily.Contains("Roman")) typeSpace = EscCodes.SelectTypeface(0);
+            if(SI.FontFamily.Contains("serif")) typeSpace = EscCodes.SelectTypeface(1);
+            if(SI.FontFamily.Contains("Script")) typeSpace = EscCodes.SelectTypeface(4);
+            dmpTxt = typeSpace + dmpTxt;
             
             
             //Bold

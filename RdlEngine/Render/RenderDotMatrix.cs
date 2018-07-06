@@ -100,8 +100,8 @@ namespace fyiReporting.RDL
             int noOfCharLeftMargin = (int)((lM.Size / RSize.PARTS_PER_INCH) * CPI);
             int noOfCharRightMargin = (int)((rM.Size / RSize.PARTS_PER_INCH) * CPI);
 
-            //startStr.Append(EscCodes.LeftMargin(noOfCharLeftMargin));
-            //startStr.Append(EscCodes.RightMargin(noOfCharPerLine - noOfCharRightMargin));
+            startStr.Append(EscCodes.LeftMargin(noOfCharLeftMargin));
+            startStr.Append(EscCodes.RightMargin(noOfCharPerLine - noOfCharRightMargin));
 
 
             //Set Page Length
@@ -592,8 +592,7 @@ namespace fyiReporting.RDL
         }
 
     }
-
-
+    
 
     static class EscCodes
     {
@@ -603,57 +602,40 @@ namespace fyiReporting.RDL
 
         public static string PageFormat(int nL, int nH, int mL, int mH)
         {
-            return ESC + "(C" + nL.ToString() + nH.ToString() + mL.ToString() + mH.ToString();
+            return ESC + "(C" + ((char)nL) + ((char)nH) + ((char)mL) + ((char)mH);
         }
 
-        public static string PageFormat(int nL, int nH, int tL, int tH, int bl,int bH)
+        public static string PageFormat(int nL, int nH, int tL, int tH, int bL,int bH)
         {
-            return ESC + "(c" + nL.ToString() + nH.ToString() + tL.ToString() + tH.ToString() + bl.ToString() + bH.ToString();
+            return ESC + "(c" + ((char)nL) + ((char)nH) + ((char)tL) + ((char)tH) + ((char)bL) + ((char)bH);
         }
 
         public static string PageLengthInLines(int noLines)
         {
-            return ESC + "C" + noLines.ToString();
+            return ESC + "C" + (char)noLines;
         }
 
         public static string PageLengthInInches(int inch)
         {
-
-            int intValue = 182;
-            // Convert integer 182 as a hex in a string variable
-            byte[] hexValue = BitConverter.GetBytes(inch);
-
-            string str = ESC + "C" + NUL + ConvertUnicodeString("U+0006");
+           string str = ESC + "C" + NUL + (char)inch;
            return str;
-        }
-
-        public static String ConvertUnicodeString(String str)
-        {
-            String result = "";
-            String[] uCodes = str.Split("U+".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (String uStr in uCodes)
-            {
-                int c = int.Parse(uStr, System.Globalization.NumberStyles.HexNumber);
-                result += (char)c;
-            }
-            return result;
         }
 
         public static string BottomMargin(byte n)
         {
-            return ESC + "N" + n.ToString();
+            return ESC + "N" + (char)n;
         }
 
         public const string CancelMargin = ESC + "O";
 
         public static string RightMargin(int n)
         {
-            return ESC + "Q" + n.ToString();
+            return ESC + "Q" + (char)n;
         }
 
         public static string LeftMargin(int n)
         {
-            return ESC + "l" + n.ToString();
+            return ESC + "l" + (char)n;
         }
 
         public const string CR = "\x0D";
@@ -663,22 +645,22 @@ namespace fyiReporting.RDL
 
         public static string AbsHPossition(int nL, int nH)
         {
-            return ESC + "$" + nL.ToString() + nH.ToString();
+            return ESC + "$" + ((char)nL) + ((char)nH);
         }
 
         public static string RelHPossition(int nL, int nH)
         {
-            return ESC + @"\" + nL.ToString() + nH.ToString();
+            return ESC + @"\" + ((char)nL) + ((char)nH);
         }
 
         public static string AbsVPossition(int nL, int nH, int mL, int mH)
         {
-            return ESC + "(V" + nL.ToString() + nH.ToString() + mL.ToString() + mH.ToString();
+            return ESC + "(V" + ((char)nL) + ((char)nH) + ((char)mL) + ((char)mH);
         }
 
         public static string AdvancePrintPossitionV(byte n)
         {
-            return ESC + "J" + n.ToString();
+            return ESC + "J" + (char)n;
         }
 
         public const string HT = "\x09";
@@ -688,12 +670,12 @@ namespace fyiReporting.RDL
         public static string Skip(bool isVertical ,byte n)
         {
             int isV = isVertical ? 1 : 0;
-            return ESC + "f" + isV.ToString() + n.ToString();
+            return ESC + "f" + ((char)isV )+ ((char)n);
         }
 
         public static string Unit(int nL, int nH, int m)
         {
-           return ESC + "(U" + nL.ToString() + nH.ToString() + m.ToString();
+           return ESC + "(U" + ((char)nL) + ((char)nH) + ((char)m);
         }
 
         public const string OneByEightInchLineSpacing = ESC + "0";
@@ -701,15 +683,15 @@ namespace fyiReporting.RDL
         public const string SevenBy72InchLineSpacing = ESC + "1";
         public static string NBy216InchLineSpacing(byte n)
         {
-            return ESC + "3" + n.ToString();
+            return ESC + "3" + (char)n;
         }
         public static string NBy380InchLineSpacing(byte n)
         {
-            return ESC + "+" + n.ToString();
+            return ESC + "+" + (char)n;
         }
         public static string NBy60InchLineSpacing(byte n)
         {
-            return ESC + "A" + n.ToString();
+            return ESC + "A" + (char)n;
         }
 
         public static string HTabs(byte[] n)
@@ -737,7 +719,7 @@ namespace fyiReporting.RDL
 
         public static string VTabVFU(byte m)
         {
-            return ESC + "/" + m.ToString();
+            return ESC + "/" + (char)m;
         }
         
         /*
@@ -751,27 +733,27 @@ namespace fyiReporting.RDL
 
         public static string Justify(byte n)
         {
-            return ESC + "a" + n.ToString();
+            return ESC + "a" + (char)n;
         }
 
         public static string AssignCharTable(int nL,int nH, int d1,int d2,int d3)
         {
-            return ESC + "(t" + nL.ToString() + nH.ToString() + d1.ToString() + d2.ToString() + d3.ToString();
+            return ESC + "(t" + (char)nL + (char)nH + (char)d1 + (char)d2 + (char)d3;
         }
 
         public static string SelectCharTable(int n)
         {
-            return ESC + "t" + n.ToString();
+            return ESC + "t" + (char)n;
         }
 
         public static string SelectInterNationalCharTable(int n)
         {
-            return ESC + "R" + n.ToString();
+            return ESC + "R" + (char)n;
         }
 
         public static string SetUserDefinedChars(int n, int m, int a0, int a1, int a2, char[] chars)
         {
-            String res = ESC + "&" + NUL + n.ToString() + m.ToString() + "[" + a0.ToString() + a1.ToString() + a2.ToString();
+            String res = ESC + "&" + NUL + (char)n + (char)m + "[" + (char)a0 + (char)a1 + (char)a2;
             foreach (char c in chars) res += c;
             res = res + "]";
             return res;
@@ -780,33 +762,33 @@ namespace fyiReporting.RDL
         public static string CopyROMtoRAM(bool isRoman, int m)
         {
             int isV = isRoman ? 0 : 1;
-            return ESC + ":" + NUL + isV.ToString() + m.ToString();
+            return ESC + ":" + NUL + (char)isV + (char)m;
         }
 
         public static string SelectUserDefinedChars(int n)
         {
-            return ESC + "%" + n.ToString();
+            return ESC + "%" + (char)n;
         }
 
         public static string SelectLQOrDraft(bool isDraft)
         {
             int isV = isDraft ? 0 : 1;
-            return ESC + "x" + isV.ToString() ;
+            return ESC + "x" + (char)isV;
         }
 
         public static string SelectTypeface(int n)
         {
-            return ESC + "k" + n.ToString();
+            return ESC + "k" + (char)n;
         }
 
         public static string SelectFont(int m, int nL, int nH)
         {
-            return ESC + "X" + nL.ToString() + nH.ToString();
+            return ESC + "X" + (char)nL + (char)nH;
         }
 
         public static string HMI(int nL, int nH)
         {
-            return ESC + "c" + nL.ToString() + nH.ToString();
+            return ESC + "c" + (char)nL + (char)nH;
         }
 
         public const string _10CPI = ESC + "P";
@@ -815,17 +797,17 @@ namespace fyiReporting.RDL
 
         public static string ProportionalMode(int n)
         {
-            return ESC + "p" + n.ToString();
+            return ESC + "p" + (char)n;
         }
 
         public static string InterCharSpace(int n)
         {
-            return ESC + " " + n.ToString();
+            return ESC + " " + (char)n;
         }
 
         public static string MasterSelect(int n)
         {
-            return ESC + "!" + n.ToString();
+            return ESC + "!" + (char)n;
         }
 
         public const string BELL = ESC + "\x07";
@@ -847,37 +829,37 @@ namespace fyiReporting.RDL
         public static string Underline(bool isUnderLine)
         {
             int isV = isUnderLine ? 1 : 0;
-            return ESC + "-" + isV.ToString();
+            return ESC + "-" + (char)isV;
         }
 
         public static string SelectLineScore( int nL, int nH, int m, int d1, int d2)
         {
            
-            return ESC + "(-"+ nL.ToString() + nH.ToString() + m.ToString() + d1.ToString() + d2.ToString();
+            return ESC + "(-"+ (char)nL + (char)nH + (char)m + (char)d1 + (char)d2;
         }
 
         public static string SuperSubscipt(bool isSupescript)
         {
             int isV = isSupescript ? 1 : 0;
-            return ESC + "S" + isV.ToString();
+            return ESC + "S" + (char)isV;
         }
         public const string CancelSuperSubscipt = ESC + "T";
 
         public static string SelectCharStyle(int n)
         {
-            return ESC + "q" + n.ToString();
+            return ESC + "q" + (char)n;
         }
 
         public static string DoubleWidthOnOff(bool flag)
         {
             int isV = flag ? 1 : 0;
-            return ESC + "W" + isV.ToString();
+            return ESC + "W" + (char)isV;
         }
 
         public static string DoubleHeightOnOff(bool flag)
         {
             int isV = flag ? 1 : 0;
-            return ESC + "w" + isV.ToString();
+            return ESC + "w" + (char)isV;
         }
 
         public static string PrintData(int nL, int nH, char[] chars)
@@ -894,22 +876,22 @@ namespace fyiReporting.RDL
         public const string CancelMSB = ESC + "#";
         public static string EnablePrintControlCodes(int n)
         {
-            return ESC + "I" + n.ToString();
+            return ESC + "I" + (char)n;
         }
         public static string SelectPrintUpperControl(int n)
         {
-            return ESC + "m" + n.ToString();
+            return ESC + "m" + (char)n;
         }
 
         public static string PaperLoading(char n)
         {
-            return ESC + "\x19" + n.ToString();
+            return ESC + "\x19" + (char)n;
         }
 
         public static string SelectUniDirectional(bool flag)
         {
             int isV = flag ? 1 : 0;
-            return ESC + "U" + isV.ToString();
+            return ESC + "U" + (char)isV;
         }
 
         public const string UniDirectionOneLine = ESC + "<";
@@ -917,23 +899,23 @@ namespace fyiReporting.RDL
         public static string LowSpeed(bool isLowSpeed)
         {
             int isV = isLowSpeed ? 1 : 0;
-            return ESC + "s" + isV.ToString();
+            return ESC + "s" + (char)isV;
         }
 
         public static string SelectGraphicsMode(int nL, int nH, int m )
         {
-            return ESC + "(G" + nL.ToString() + nH.ToString() + m.ToString();
+            return ESC + "(G" + (char)nL + (char)nH + (char)m;
         }
 
         public static string SelectMicroWaveMode(bool flag)
         {
             int isV = flag ? 1 : 0;
-            return ESC + "(i0100" + isV.ToString();
+            return ESC + "(i0100" + (char)isV;
         }
 
         public static string RevesePaperFeed(int n)
         {
-            return ESC + "j" + n.ToString();
+            return ESC + "j" + (char)n;
         }
     }
 }
