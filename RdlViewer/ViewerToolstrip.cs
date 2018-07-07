@@ -93,7 +93,7 @@ namespace fyiReporting.RdlViewer
             }
 
             var dlg = new SaveFileDialog();
-            dlg.Filter = "PDF files|*.pdf|XML files|*.xml|HTML files|*.html|CSV files|*.csv|RTF files|*.rtf|TIF files|*.tif|Excel files|*.xlsx|MHT files|*.mht";
+            dlg.Filter = "PDF files|*.pdf|XML files|*.xml|HTML files|*.html|CSV files|*.csv|RTF files|*.rtf|TIF files|*.tif|Excel files|*.xlsx|MHT files|*.mht|DMP files|*.dmp";
             dlg.FileName = ".pdf";
             var result = dlg.ShowDialog();
             if (result != DialogResult.OK)
@@ -126,9 +126,6 @@ namespace fyiReporting.RdlViewer
                 case "htm":
                     type = fyiReporting.RDL.OutputPresentationType.HTML;
                     break;
-                case "dot":
-                    type = fyiReporting.RDL.OutputPresentationType.DMP;
-                    break;
                 case "csv":
                     type = fyiReporting.RDL.OutputPresentationType.CSV;
                     break;
@@ -150,8 +147,11 @@ namespace fyiReporting.RdlViewer
                 case "tiff":
                     type = fyiReporting.RDL.OutputPresentationType.TIF;
                     break;
+                case "dmp":
+                    type = fyiReporting.RDL.OutputPresentationType.DMP;
+                    break;
                 default:
-                    MessageBox.Show(String.Format("{0} is not a valid file type. File extension must be PDF, XML, HTML, CSV, MHT, RTF, TIF, XLSX.", dlg.FileName),
+                    MessageBox.Show(String.Format("{0} is not a valid file type. File extension must be PDF, XML, HTML, CSV, MHT, RTF, TIF, XLSX, DMP.", dlg.FileName),
                         "Invalid File Type", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
             }
