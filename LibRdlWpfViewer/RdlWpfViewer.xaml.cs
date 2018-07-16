@@ -58,6 +58,51 @@ namespace LibRdlWpfViewer
             }
         }
 
+        public bool ShowFindPanel
+        {
+            get
+            {
+                return this.reportViewer.ShowFindPanel;
+            }
+            set
+            {
+                this.reportViewer.ShowFindPanel = value;
+            }
+        }
+
+
+        public bool ShowParameterPanel
+        {
+            get
+            {
+                return this.reportViewer.ShowParameterPanel;
+            }
+            set
+            {
+                this.reportViewer.ShowParameterPanel = value;
+            }
+        }
+
+        public void ShowRunButton()
+        {
+              this.reportViewer.ShowRunButton();
+        }
+
+        public void HideRunButton()
+        {
+            this.reportViewer.HideRunButton();
+        }
+
+        public void Show()
+        {
+            this.reportViewer.Show();
+        }
+
+        public void Hide()
+        {
+            this.reportViewer.Hide();
+        }
+
         public string Parameters
         {
             get
