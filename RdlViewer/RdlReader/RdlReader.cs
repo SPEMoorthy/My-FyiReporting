@@ -515,8 +515,8 @@ namespace fyiReporting.RdlReader
                 case "htm":
                     type = OutputPresentationType.HTML;
                     break;
-                case "dmp":
-                    type = OutputPresentationType.DMP;
+                case "dot":
+                    type = OutputPresentationType.Dot;
                     break;  
                 case "csv":
                     type = OutputPresentationType.CSV;
