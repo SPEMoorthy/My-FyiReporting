@@ -103,6 +103,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="RdlWpfViewerToolstrip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="RdlWpfViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +127,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RdlWpfViewerToolstrip.xaml.cs">
+      <DependentUpon>RdlWpfViewerToolstrip.xaml</DependentUpon>
     </Compile>
     <Compile Include="RdlWpfViewer.xaml.cs">
       <DependentUpon>RdlWpfViewer.xaml</DependentUpon>
