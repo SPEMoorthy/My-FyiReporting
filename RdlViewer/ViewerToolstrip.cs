@@ -98,6 +98,9 @@ namespace fyiReporting.RdlViewer
             {   
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
+                    Viewer.SaveAs("C:\\Temp\\Report.txt", OutputPresentationType.DMP);
+                    RawPrinterHelper.SendFileToPrinter(dlg.PrinterSettings.PrinterName, "C:\\Temp\\Report.txt");
+                    /*
                     MemoryStreamGen ms = new MemoryStreamGen();
                     Viewer.Report.RunRender(ms, RDL.OutputPresentationType.DMP);
                     byte[] bytes = ((MemoryStream)ms.GetStream()).ToArray();
@@ -107,6 +110,7 @@ namespace fyiReporting.RdlViewer
                     FileStream fs = new FileStream("C:\\Temp\\Report.txt", FileMode.Create);
                     fs.Write(bytes, 0, bytes.Length);
                     fs.Close();
+                    */
                 }
             }
         }
