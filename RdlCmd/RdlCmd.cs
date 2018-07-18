@@ -374,8 +374,8 @@ namespace fyiReporting.RdlCmd
 					case "mht": 
 						report.RunRender(sg, OutputPresentationType.MHTML);
 						break;
-                    case "dot":
-                        report.RunRender(sg, OutputPresentationType.Dot);
+                    case "dmp":
+                        report.RunRender(sg, OutputPresentationType.DMP);
                         break;
                     case "html": case "htm":
 						report.RunRender(sg, OutputPresentationType.HTML);
