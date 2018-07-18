@@ -68,7 +68,7 @@ namespace fyiReporting.RdlViewer
             }
 
             PrintDocument pd = new PrintDocument();
-            pd.DocumentName = Viewer.SourceFile.LocalPath;
+            //pd.DocumentName = Viewer.SourceFile.LocalPath;
             pd.PrinterSettings.FromPage = 1;
             pd.PrinterSettings.ToPage = Viewer.PageCount;
             pd.PrinterSettings.MaximumPage = Viewer.PageCount;
