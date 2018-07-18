@@ -157,6 +157,7 @@
     <Compile Include="DialogWait.Designer.cs">
       <DependentUpon>DialogWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="RawPrinterHelper.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

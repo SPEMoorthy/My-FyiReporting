@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Resources;
 using System.Reflection;
 using System.IO;
+using fyiReporting.RDL;
+using System.Runtime.InteropServices;
 
 namespace fyiReporting.RdlViewer
 {
@@ -83,6 +85,30 @@ namespace fyiReporting.RdlViewer
                 }
             }
 
+        }
+
+        private void DMPPrintClicked(object sender, EventArgs e)
+        {
+            if (Viewer == null)
+            {
+                return;
+            }
+
+            using (PrintDialog dlg = new PrintDialog())
+            {   
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    MemoryStreamGen ms = new MemoryStreamGen();
+                    Viewer.Report.RunRender(ms, RDL.OutputPresentationType.DMP);
+                    byte[] bytes = ((MemoryStream)ms.GetStream()).ToArray();
+                    IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
+                    Marshal.Copy(bytes, 0, ptr, bytes.Length);
+                    RawPrinterHelper.SendBytesToPrinter(dlg.PrinterSettings.PrinterName, ptr, bytes.Length);
+                    FileStream fs = new FileStream("C:\\Temp\\Report.txt", FileMode.Create);
+                    fs.Write(bytes, 0, bytes.Length);
+                    fs.Close();
+                }
+            }
         }
 
         private void SaveAsClicked(object sender, System.EventArgs e)
@@ -232,12 +258,10 @@ namespace fyiReporting.RdlViewer
 
         private void InitializeToolBar()
         {
-
-           
-
             this.Items.Add(new ToolStripButton("Open", GetImage("fyiReporting.RdlViewer.Resources.document-open.png"), OpenClicked));
             this.Items.Add(new ToolStripButton("Save As", GetImage("fyiReporting.RdlViewer.Resources.document-save.png"), SaveAsClicked));
             this.Items.Add(new ToolStripButton("Print", GetImage("fyiReporting.RdlViewer.Resources.document-print.png"), PrintClicked));
+            this.Items.Add(new ToolStripButton("DMP Print", GetImage("fyiReporting.RdlViewer.Resources.document-print.png"), DMPPrintClicked));
             this.Items.Add(new ToolStripButton("<<", null, FirstPageClicked));
             this.Items.Add(new ToolStripButton("<", null, PreviousPageClicked));
             this.Items.Add(new ToolStripButton(">", null, NextPageClicked));
@@ -247,7 +271,6 @@ namespace fyiReporting.RdlViewer
             this.Items.Add(new ToolStripButton("Zoom In", null, ZoomInClicked));
             this.Items.Add(new ToolStripButton("Zoom Out", null, ZoomOutClicked));
         }
-
 
         void HandlePageNavigation(object sender, PageNavigationEventArgs e)
         {
