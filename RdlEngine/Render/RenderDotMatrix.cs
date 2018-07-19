@@ -429,7 +429,7 @@ namespace fyiReporting.RDL
                 curLine++;
             }
 
-            tw.Write(EscCodes.FF + EscCodes.ResetPrinter);
+            tw.Write(EscCodes.FF + EscCodes.CR);
         }
 
         public void BodyStart(Body b)
