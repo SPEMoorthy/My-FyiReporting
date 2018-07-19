@@ -386,22 +386,32 @@ namespace fyiReporting.RDL
             //Sort Dmp Items
             lstDmpItems = lstDmpItems.OrderBy(q => q.R).ThenBy(q => q.C).ToList();
 
+
+            /*
             //If page begins with nth line... Fill n-1 empty lines.
             DMPItem fstItm = lstDmpItems.FirstOrDefault();
             if (fstItm != null && fstItm.Y > 0)
             {
                 for (int i = (fstItm.R - 1); i > 0; i--) tw.Write(EscCodes.CRLF);
             }
-
+            */
 
             var grpLines = from dmpItm in lstDmpItems
                            group dmpItm by dmpItm.R into newgrpDmpItm
                            select newgrpDmpItm;
-
+            int curLine = 1;
             foreach(var dmpLine in grpLines)
             {
                 StringBuilder strLine = new StringBuilder();
                 DMPItem firstItm = dmpLine.FirstOrDefault();
+
+                //If Line not matching curr line add empty lines.
+               while(curLine < firstItm.R)
+                {
+                    tw.Write(EscCodes.CRLF);
+                    curLine++;
+                }
+
                 if(firstItm != null && firstItm.X > lM.Points)
                 {
                    int wcin10CPI = (int)Math.Ceiling((firstItm.X-lM.Points) / (72.27f / 10));
@@ -416,6 +426,7 @@ namespace fyiReporting.RDL
                 }
                 strLine.Append(EscCodes.CRLF);
                 tw.Write(strLine.ToString());
+                curLine++;
             }
 
             tw.Write(EscCodes.FF + EscCodes.ResetPrinter);
