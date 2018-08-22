@@ -49,7 +49,8 @@ namespace fyiReporting.RDL
 		internal ReportLog rl;	// report log
 		Name _Name;				// Name of the report
 		string _Description;	// Description of the report
-		string _Author;			// Author of the report
+        bool _RollPaper;      // Is the report targeted to continuous stationery
+        string _Author;			// Author of the report
 		int _AutoRefresh;		// Rate at which the report page automatically refreshes, in seconds.  Must be nonnegative.
 		//    If omitted or zero, the report page should not automatically refresh.
 		//    Max: 2147483647
@@ -122,6 +123,7 @@ namespace fyiReporting.RDL
 			GetDataSourceReferencePassword = getpswd;
 			_ParseFolder = folder;
 			_Description = null;
+            _RollPaper = false;
 			_Author = null;		
 			_AutoRefresh = -1;
 			_DataSourcesDefn = null;
@@ -178,7 +180,10 @@ namespace fyiReporting.RDL
 					case "Description":
 						_Description = xNodeLoop.InnerText;
 						break;
-					case "Author":
+                    case "RollPaper":
+                        _RollPaper = XmlUtil.Boolean(xNodeLoop.InnerText, this.rl);
+                        break;
+                    case "Author":
 						_Author = xNodeLoop.InnerText;
 						break;
 					case "AutoRefresh":
@@ -250,6 +255,8 @@ namespace fyiReporting.RDL
 					case "DataElementStyle":
 						_DataElementStyle = fyiReporting.RDL.DataElementStyle.GetStyle(xNodeLoop.InnerText, this.rl);
 						break;
+
+
 					default:
 						// don't know this element - log it
 						this.rl.LogError(4, "Unknown Report element '" + xNodeLoop.Name + "' ignored.");
@@ -468,7 +475,13 @@ namespace fyiReporting.RDL
 			set {  _Description = value; }
 		}
 
-		internal string Author
+        internal bool RollPaper
+        {
+            get { return _RollPaper; }
+            set { _RollPaper = value; }
+        }
+
+        internal string Author
 		{
 			get { return  _Author; }
 			set {  _Author = value; }

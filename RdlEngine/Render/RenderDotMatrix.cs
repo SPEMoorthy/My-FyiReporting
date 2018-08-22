@@ -96,6 +96,8 @@ namespace fyiReporting.RDL
             RSize lM = r.ReportDefinition.LeftMargin;
             RSize rM = r.ReportDefinition.RightMargin;
 
+            bool isRollPaper = r.ReportDefinition.RollPaper;
+
             int noOfCharPerLine = (int)((rptWidth.Size / RSize.PARTS_PER_INCH) * CPI);
             int noOfCharLeftMargin = (int)((lM.Size / RSize.PARTS_PER_INCH) * CPI);
             int noOfCharRightMargin = (int)((rM.Size / RSize.PARTS_PER_INCH) * CPI);
@@ -103,7 +105,7 @@ namespace fyiReporting.RDL
             startStr.Append(EscCodes.LeftMargin(noOfCharLeftMargin));
             startStr.Append(EscCodes.RightMargin(noOfCharPerLine - noOfCharRightMargin));
 
-
+            
             //Set Page Length
             RSize rptHeight = r.ReportDefinition.PageHeight;
             int rptHeightinInches = (int)(rptHeight.Size / RSize.PARTS_PER_INCH);

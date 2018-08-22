@@ -827,7 +827,7 @@
             this.DMPToolStripButton1.Image = global::fyiReporting.RdlDesign.Properties.Resources.dot;
             resources.ApplyResources(this.DMPToolStripButton1, "DMPToolStripButton1");
             this.DMPToolStripButton1.Name = "DMPToolStripButton1";
-            this.DMPToolStripButton1.Tag = "TIF";
+            this.DMPToolStripButton1.Tag = "DMP";
             this.DMPToolStripButton1.Click += new System.EventHandler(this.DMPToolStripButton1_Click);
             // 
             // RdlUserControl
