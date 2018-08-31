@@ -68,6 +68,7 @@ namespace fyiReporting.RdlDesign
             XmlNode pfNode = _Draw.GetCreateNamedChildNode(rNode, "PageFooter");
             this.chkPFFirst.Checked = _Draw.GetElementValue(pfNode, "PrintOnFirstPage", "true").ToLower() == "true" ? true : false;
             this.chkPFLast.Checked = _Draw.GetElementValue(pfNode, "PrintOnLastPage", "true").ToLower() == "true" ? true : false;
+            this.chkRollPaper.Checked = _Draw.GetElementValue(rNode, "RollPaper", "false").ToLower() == "true" ? true : false;
 
 
             PrinterSettings settings = new PrinterSettings();
@@ -130,6 +131,7 @@ namespace fyiReporting.RdlDesign
             _Draw.SetElement(rNode, "Description", tbReportDescription.Text);
             _Draw.SetElement(rNode, "PageWidth", tbPageWidth.Text);
             _Draw.SetElement(rNode, "PageHeight", tbPageHeight.Text);
+            _Draw.SetElement(rNode, "RollPaper", this.chkRollPaper.Checked ? "true" : "false");
             if (tbMarginLeft.Text.Trim().Length > 0)
                 _Draw.SetElement(rNode, "LeftMargin", tbMarginLeft.Text);
             else

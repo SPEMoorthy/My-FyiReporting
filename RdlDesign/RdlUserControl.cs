@@ -559,6 +559,10 @@ namespace fyiReporting.RdlDesign
             {
                 TifToolStripButton2.Enabled = bEnablePreview;
             }
+            if (DMPToolStripButton1 != null)
+            {
+                DMPToolStripButton1.Enabled = bEnablePreview;
+            }
             if (XmlToolStripButton2 != null)
             {
                 XmlToolStripButton2.Enabled = bEnablePreview;
