@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static fyiReporting.RdlViewer.RdlViewer;
 
 namespace LibRdlWpfViewer
 {
@@ -27,7 +28,9 @@ namespace LibRdlWpfViewer
         public void Rebuild()
         {
             this.reportViewer.Rebuild();
-        }
+         }
+
+        
 
         public void SaveAs(string FileName, fyiReporting.RDL.OutputPresentationType type)
         {
@@ -43,6 +46,17 @@ namespace LibRdlWpfViewer
             set
             {
                 this.reportViewer.SourceFile = value;
+            }
+        }
+        public event HyperlinkEventHandler Hyperlink
+        {
+            remove
+            {
+                this.reportViewer.Hyperlink -= value;
+            }
+            add
+            {
+                this.reportViewer.Hyperlink += value;
             }
         }
 
