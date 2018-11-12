@@ -792,8 +792,8 @@ namespace fyiReporting.RDL
         float y;                // y coordinate       
         float w;                // width   --- line redefines as X2
         float h;                // height  --- line redefines as Y2
-        int r;                  // Row number of the page
-        int c;                  // Column number of the page
+        float r;                  // Row number of the page
+        float c;                  // Column number of the page
         string text;            // Text
         float cpi;                // Char Per Inch
         float lpi;                // Line Per Inch
@@ -823,13 +823,13 @@ namespace fyiReporting.RDL
             set { w = value; }
         }
 
-        public int R
+        public float R
         {
             get { return r; }
             set { r = value; }
         }
 
-        public int C
+        public float C
         {
             get { return c; }
             set { c = value; }
@@ -875,8 +875,8 @@ namespace fyiReporting.RDL
             this.lpi = lpi;
             this.text = text;
             this.si = si;
-            this.c = (int)Math.Ceiling(x / (POINTSIZE_F / 10)); //Calculate Column based on 10CPI Size
-            this.r = (int)Math.Ceiling(y / (POINTSIZE_F / lpi));
+            this.c = (float)(x / (POINTSIZE_F / 10)); //Calculate Column based on 10CPI Size
+            this.r = (float)(y / (POINTSIZE_F / lpi));
             this.wc = (int)Math.Ceiling(w / (POINTSIZE_F / cpi));
         }
 
