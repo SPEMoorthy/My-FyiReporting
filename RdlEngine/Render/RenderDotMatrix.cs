@@ -58,7 +58,7 @@ namespace fyiReporting.RDL
 
         public bool IsPagingNeeded()
         {
-            return true;
+            return true; 
         }
 
         public void Start()
@@ -72,9 +72,56 @@ namespace fyiReporting.RDL
 
         public void RunPages(Pages pgs)	// this does all the work
         {
-            foreach (Page p in pgs)
+            bool isRollPaper = r.ReportDefinition.RollPaper;
+            if (isRollPaper)
             {
-                ProcessPage(pgs, p);
+                #region DMP Page Setting
+                //Set Page Settings
+                StringBuilder startStr = new StringBuilder();
+                //Send an ESC @ command to initialize the printer
+                startStr.Append(EscCodes.ResetPrinter);
+
+                //Select 10-cpi printing (character width of 1/10 inch)
+                startStr.Append(EscCodes._10CPI);
+                int CPI = 10;
+                int LPI = 6;
+                //Set Left and right margin from report
+                RSize rptWidth = r.ReportDefinition.PageWidth;
+                RSize lM = r.ReportDefinition.LeftMargin;
+                RSize rM = r.ReportDefinition.RightMargin;
+
+                int noOfCharPerLine = (int)((rptWidth.Size / RSize.PARTS_PER_INCH) * CPI);
+                int noOfCharLeftMargin = (int)((lM.Size / RSize.PARTS_PER_INCH) * CPI);
+                int noOfCharRightMargin = (int)((rM.Size / RSize.PARTS_PER_INCH) * CPI);
+
+                startStr.Append(EscCodes.LeftMargin(noOfCharLeftMargin));
+                startStr.Append(EscCodes.RightMargin(noOfCharPerLine - noOfCharRightMargin));
+
+
+                //Set Page Length
+                //RSize rptHeight = r.ReportDefinition.PageHeight;
+                //int rptHeightinInches = (int)(rptHeight.Size / RSize.PARTS_PER_INCH);
+                //startStr.Append(EscCodes.PageLengthInInches((rptHeightinInches)));
+
+
+                //Set Print Quality
+                startStr.Append(EscCodes.SelectLQOrDraft(true));
+
+
+                tw.Write(startStr.ToString());
+                #endregion
+                foreach (Page p in pgs)
+                {
+                    ProcessPageForRollPaper(pgs, p);
+                }
+                tw.Write(EscCodes.FF + EscCodes.CR);
+            }
+            else
+            {
+                foreach (Page p in pgs)
+                {
+                    ProcessPage(pgs, p);
+                }
             }
         }
 
@@ -432,6 +479,330 @@ namespace fyiReporting.RDL
             }
 
             tw.Write(EscCodes.FF + EscCodes.CR);
+        }
+
+
+        // render all the objects in a page in PDF
+        private void ProcessPageForRollPaper(Pages pgs, IEnumerable items)
+        {
+            int CPI = 10;
+            int LPI = 6;
+            //Set Left and right margin from report
+            RSize rptWidth = r.ReportDefinition.PageWidth;
+            RSize lM = r.ReportDefinition.LeftMargin;
+            RSize rM = r.ReportDefinition.RightMargin;
+
+            List<DMPItem> lstDmpItems = new List<DMPItem>();
+
+            foreach (PageItem pi in items)
+            {
+                if (pi is PageText)
+                {
+                    PageText pt = pi as PageText;
+                    lstDmpItems.Add(new DMPItem(pt.X, pt.Y, pt.W, pt.H, LPI, pt.Text, pt.SI));
+                    continue;
+                }
+                #region OtherItems
+                /*
+                if (pi.SI.BackgroundImage != null)
+                {	// put out any background image
+                    PageImage bgImg = pi.SI.BackgroundImage;
+                    //					elements.AddImage(images, i.Name, content.objectNum, i.SI, i.ImgFormat, 
+                    //						pi.X, pi.Y, pi.W, pi.H, i.ImageData,i.SamplesW, i.SamplesH, null);				   
+                    //Duc Phan modified 10 Dec, 2007 to support on background image 
+                    float imW = Measurement.PointsFromPixels(bgImg.SamplesW, pgs.G.DpiX);
+                    float imH = Measurement.PointsFromPixels(bgImg.SamplesH, pgs.G.DpiY);
+                    int repeatX = 0;
+                    int repeatY = 0;
+                    float itemW = pi.W - (pi.SI.PaddingLeft + pi.SI.PaddingRight);
+                    float itemH = pi.H - (pi.SI.PaddingTop + pi.SI.PaddingBottom);
+                    switch (bgImg.Repeat)
+                    {
+                        case ImageRepeat.Repeat:
+                            repeatX = (int)Math.Floor(itemW / imW);
+                            repeatY = (int)Math.Floor(itemH / imH);
+                            break;
+                        case ImageRepeat.RepeatX:
+                            repeatX = (int)Math.Floor(itemW / imW);
+                            repeatY = 1;
+                            break;
+                        case ImageRepeat.RepeatY:
+                            repeatY = (int)Math.Floor(itemH / imH);
+                            repeatX = 1;
+                            break;
+                        case ImageRepeat.NoRepeat:
+                        default:
+                            repeatX = repeatY = 1;
+                            break;
+                    }
+
+                    //make sure the image is drawn at least 1 times 
+                    repeatX = Math.Max(repeatX, 1);
+                    repeatY = Math.Max(repeatY, 1);
+
+                    float currX = pi.X + pi.SI.PaddingLeft;
+                    float currY = pi.Y + pi.SI.PaddingTop;
+                    float startX = currX;
+                    float startY = currY;
+                    for (int i = 0; i < repeatX; i++)
+                    {
+                        for (int j = 0; j < repeatY; j++)
+                        {
+                            currX = startX + i * imW;
+                            currY = startY + j * imH;
+
+                            if (r.ItextPDF)
+                            {
+
+                                iAddImage(images, bgImg.Name,
+                                                content.objectNum, bgImg.SI, bgImg.ImgFormat,
+                                                currX, currY, imW, imH, RectangleF.Empty, bgImg.ImageData, bgImg.SamplesW, bgImg.SamplesH, null, pi.Tooltip);
+                            }
+                            else
+                            {
+                                elements.AddImage(images, bgImg.Name,
+                                           content.objectNum, bgImg.SI, bgImg.ImgFormat,
+                                           currX, currY, imW, imH, RectangleF.Empty, bgImg.ImageData, bgImg.SamplesW, bgImg.SamplesH, null, pi.Tooltip);
+
+                            }
+
+                        }
+                    }
+                }
+
+                if (pi is PageTextHtml)
+                {
+                    PageTextHtml pth = pi as PageTextHtml;
+                    pth.Build(pgs.G);
+                    ProcessPage(pgs, pth);
+                    continue;
+                }
+
+                if (pi is PageLine)
+                {
+                    PageLine pl = pi as PageLine;
+
+
+                    if (r.ItextPDF)
+                    {
+                        iAddLine(pl.X, pl.Y, pl.X2, pl.Y2, pl.SI);
+                    }
+                    else
+                    {
+                        elements.AddLine(pl.X, pl.Y, pl.X2, pl.Y2, pl.SI);
+                    }
+
+                    continue;
+                }
+
+                if (pi is PageEllipse)
+                {
+                    PageEllipse pe = pi as PageEllipse;
+
+
+                    if (r.ItextPDF)
+                    {
+                        iAddEllipse(pe.X, pe.Y, pe.H, pe.W, pe.SI, pe.HyperLink);
+                    }
+                    else
+                    {
+                        elements.AddEllipse(pe.X, pe.Y, pe.H, pe.W, pe.SI, pe.HyperLink);
+                    }
+
+
+                    continue;
+                }
+
+                if (pi is PageImage)
+                {
+                    //PageImage i = pi as PageImage;
+                    //float x = i.X + i.SI.PaddingLeft;
+                    //float y = i.Y + i.SI.PaddingTop;
+                    //float w = i.W - i.SI.PaddingLeft - i.SI.PaddingRight;
+                    //float h = i.H - i.SI.PaddingTop - i.SI.PaddingBottom;
+                    //elements.AddImage(images, i.Name, content.objectNum, i.SI, i.ImgFormat, 
+                    //	x, y, w, h, i.ImageData,i.SamplesW, i.SamplesH, i.HyperLink);
+                    //continue;
+                    PageImage i = pi as PageImage;
+
+                    //Duc Phan added 20 Dec, 2007 to support sized image 
+                    RectangleF r2 = new RectangleF(i.X + i.SI.PaddingLeft, i.Y + i.SI.PaddingTop, i.W - i.SI.PaddingLeft - i.SI.PaddingRight, i.H - i.SI.PaddingTop - i.SI.PaddingBottom);
+
+                    RectangleF adjustedRect;   // work rectangle 
+                    RectangleF clipRect = RectangleF.Empty;
+                    switch (i.Sizing)
+                    {
+                        case ImageSizingEnum.AutoSize:
+                            adjustedRect = new RectangleF(r2.Left, r2.Top,
+                                            r2.Width, r2.Height);
+                            break;
+                        case ImageSizingEnum.Clip:
+                            adjustedRect = new RectangleF(r2.Left, r2.Top,
+                                            Measurement.PointsFromPixels(i.SamplesW, pgs.G.DpiX), Measurement.PointsFromPixels(i.SamplesH, pgs.G.DpiY));
+                            clipRect = new RectangleF(r2.Left, r2.Top,
+                                            r2.Width, r2.Height);
+                            break;
+                        case ImageSizingEnum.FitProportional:
+                            float height;
+                            float width;
+                            float ratioIm = (float)i.SamplesH / i.SamplesW;
+                            float ratioR = r2.Height / r2.Width;
+                            height = r2.Height;
+                            width = r2.Width;
+                            if (ratioIm > ratioR)
+                            {   // this means the rectangle width must be corrected 
+                                width = height * (1 / ratioIm);
+                            }
+                            else if (ratioIm < ratioR)
+                            {   // this means the rectangle height must be corrected 
+                                height = width * ratioIm;
+                            }
+                            adjustedRect = new RectangleF(r2.X, r2.Y, width, height);
+                            break;
+                        case ImageSizingEnum.Fit:
+                        default:
+                            adjustedRect = r2;
+                            break;
+                    }
+                    if (i.ImgFormat == System.Drawing.Imaging.ImageFormat.Wmf || i.ImgFormat == System.Drawing.Imaging.ImageFormat.Emf)
+                    {
+                        //We dont want to add it - its already been broken down into page items;
+                    }
+                    else
+                    {
+
+                        if (r.ItextPDF)
+                        {
+                            iAddImage(images, i.Name, content.objectNum, i.SI, i.ImgFormat,
+                            adjustedRect.X, adjustedRect.Y, adjustedRect.Width, adjustedRect.Height, clipRect, i.ImageData, i.SamplesW, i.SamplesH, i.HyperLink, i.Tooltip);
+                        }
+                        else
+                        {
+                            elements.AddImage(images, i.Name, content.objectNum, i.SI, i.ImgFormat,
+                           adjustedRect.X, adjustedRect.Y, adjustedRect.Width, adjustedRect.Height, clipRect, i.ImageData, i.SamplesW, i.SamplesH, i.HyperLink, i.Tooltip);
+
+                        }
+
+                    }
+                    continue;
+                }
+
+                if (pi is PageRectangle)
+                {
+                    PageRectangle pr = pi as PageRectangle;
+
+
+                    if (r.ItextPDF)
+                    {
+                        iAddRectangle(pr.X, pr.Y, pr.H, pr.W, pi.SI, pi.HyperLink, patterns, pi.Tooltip);
+                    }
+                    else
+                    {
+                        elements.AddRectangle(pr.X, pr.Y, pr.H, pr.W, pi.SI, pi.HyperLink, patterns, pi.Tooltip);
+                    }
+
+                    continue;
+                }
+
+                if (pi is PagePie)
+                {   // TODO
+                    PagePie pp = pi as PagePie;
+                    // 
+
+                    if (r.ItextPDF)
+                    {
+                        iAddPie(pp.X, pp.Y, pp.H, pp.W, pi.SI, pi.HyperLink, patterns, pi.Tooltip);
+                    }
+                    else
+                    {
+                        elements.AddPie(pp.X, pp.Y, pp.H, pp.W, pi.SI, pi.HyperLink, patterns, pi.Tooltip);
+                    }
+
+                    continue;
+                }
+
+                if (pi is PagePolygon)
+                {
+                    PagePolygon ppo = pi as PagePolygon;
+
+
+                    if (r.ItextPDF)
+                    {
+                        iAddPolygon(ppo.Points, pi.SI, pi.HyperLink, patterns);
+                    }
+                    else
+                    {
+                        elements.AddPolygon(ppo.Points, pi.SI, pi.HyperLink, patterns);
+                    }
+
+                    continue;
+                }
+
+                if (pi is PageCurve)
+                {
+                    PageCurve pc = pi as PageCurve;
+
+
+                    if (r.ItextPDF)
+                    {
+                        iAddCurve(pc.Points, pi.SI);
+                    }
+                    else
+                    {
+                        elements.AddCurve(pc.Points, pi.SI);
+                    }
+
+                    continue;
+                }
+                */
+                #endregion
+            }
+
+            //Sort Dmp Items
+            lstDmpItems = lstDmpItems.OrderBy(q => q.R).ThenBy(q => q.C).ToList();
+
+
+            /*
+            //If page begins with nth line... Fill n-1 empty lines.
+            DMPItem fstItm = lstDmpItems.FirstOrDefault();
+            if (fstItm != null && fstItm.Y > 0)
+            {
+                for (int i = (fstItm.R - 1); i > 0; i--) tw.Write(EscCodes.CRLF);
+            }
+            */
+
+            var grpLines = from dmpItm in lstDmpItems
+                           group dmpItm by dmpItm.R into newgrpDmpItm
+                           select newgrpDmpItm;
+            int curLine = 1;
+            foreach (var dmpLine in grpLines)
+            {
+                StringBuilder strLine = new StringBuilder();
+                DMPItem firstItm = dmpLine.FirstOrDefault();
+
+                //If Line not matching curr line add empty lines.
+                while (curLine < firstItm.R)
+                {
+                    tw.Write(EscCodes.CRLF);
+                    curLine++;
+                }
+
+                if (firstItm != null && firstItm.X > lM.Points)
+                {
+                    int wcin10CPI = (int)Math.Ceiling((firstItm.X - lM.Points) / (72.27f / 10));
+                    String str = "";
+                    str = str.PadLeft(wcin10CPI);
+                    strLine.Append(EscCodes._10CPI + str);
+                }
+
+                foreach (DMPItem dmpTxt in dmpLine)
+                {
+                    strLine.Append(dmpTxt);
+                }
+                strLine.Append(EscCodes.CRLF);
+                tw.Write(strLine.ToString());
+                curLine++;
+            }           
         }
 
         public void BodyStart(Body b)
