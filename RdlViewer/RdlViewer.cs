@@ -195,7 +195,7 @@ namespace fyiReporting.RdlViewer
             RdlEngineConfig.GetCustomReportTypes();
 
             this.InitializeComponent();
-            _DrawPanel.BorderStyle = BorderStyle.None;
+            _DrawPanel.BorderStyle = BorderStyle.FixedSingle;
             _SourceFileName = null;
             _SourceRdl = null;
             _Parameters = null;             // parameters to run the report

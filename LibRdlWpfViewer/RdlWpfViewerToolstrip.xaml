@@ -4,8 +4,11 @@
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     xmlns:myctrl="clr-namespace:fyiReporting.RdlViewer;assembly=RdlViewer">
     <Grid Width="auto" Height="auto">
-        <WindowsFormsHost Margin="12" Name="windowsFormsHostViewerToolstrip">
-            <myctrl:ViewerToolstrip x:Name="viewerToolstrip" Dock="Fill" />
+        <WindowsFormsHost Margin="0" Name="windowsFormsHostViewerToolstrip" >
+            <WindowsFormsHost.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
+            </WindowsFormsHost.Background>
+            <myctrl:ViewerToolstrip x:Name="viewerToolstrip" Dock="Fill" BackColor="ActiveCaption" Margin="0,0,0,0" />
         </WindowsFormsHost>
     </Grid>
 </UserControl>

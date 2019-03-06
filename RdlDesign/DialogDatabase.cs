@@ -889,6 +889,8 @@ namespace fyiReporting.RdlDesign
                 sb.AppendFormat(cinfo, "<AllowBlank>{0}</AllowBlank>", rp.AllowBlank);
                 if (rp.Prompt != null && rp.Prompt.Length > 0)
                     sb.AppendFormat(cinfo, "<Prompt>{0}</Prompt>", rp.Prompt);
+                if (rp.SearchDialog != null && rp.SearchDialog.Length > 0)
+                    sb.AppendFormat(cinfo, "<SearchDialog>{0}</SearchDialog>", rp.SearchDialog);
                 if (rp.ValidValues != null && rp.ValidValues.Count > 0)
                 {
                     sb.Append("<ValidValues><ParameterValues>");
