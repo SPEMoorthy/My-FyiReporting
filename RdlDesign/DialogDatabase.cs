@@ -102,7 +102,7 @@ namespace fyiReporting.RdlDesign
 		<ReportItems>
 			<Table>
 				<DataSetName>Data</DataSetName>
-				<NoRows>Query returned no rows!</NoRows>
+				<NoRows>Records Not Found!</NoRows>
 				<Style><BorderStyle><Default>Solid</Default></BorderStyle></Style>
 				<TableColumns>
 					|tablecolumns|
@@ -224,7 +224,7 @@ namespace fyiReporting.RdlDesign
 			<List>
 				<DataSetName>Data</DataSetName>
 				<Height>24pt</Height>
-				<NoRows>Query returned no rows!</NoRows>
+				<NoRows>Record Not Founds!</NoRows>
 				<ReportItems>
 					|listvalues|
 				</ReportItems>

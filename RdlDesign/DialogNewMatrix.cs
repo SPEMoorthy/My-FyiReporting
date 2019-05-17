@@ -55,7 +55,7 @@ namespace fyiReporting.RdlDesign
             {
                 StringBuilder matrix = new StringBuilder("<Matrix>");
                 matrix.AppendFormat("<DataSetName>{0}</DataSetName>", this.cbDataSets.Text);
-                matrix.Append("<NoRows>Query returned no rows!</NoRows><Style>" +
+                matrix.Append("<NoRows>Record Not Founds!</NoRows><Style>" +
                     "<BorderStyle><Default>Solid</Default></BorderStyle></Style>");
 
                 matrix.Append("<Corner><ReportItems><Textbox Name=\"Corner\"><Value>Corner</Value>" +

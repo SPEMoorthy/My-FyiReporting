@@ -65,7 +65,7 @@ namespace fyiReporting.RdlDesign
             {
                 StringBuilder table = new StringBuilder("<Table>");
                 table.AppendFormat("<DataSetName>{0}</DataSetName>", this.cbDataSets.Text);
-                table.Append("<NoRows>Query returned no rows!</NoRows><Style>" +
+                table.Append("<NoRows>Record Not Founds!</NoRows><Style>" +
                     "<BorderStyle><Default>Solid</Default></BorderStyle></Style>");
 
                 StringBuilder tablecolumns = new StringBuilder("<TableColumns>");
@@ -184,7 +184,7 @@ namespace fyiReporting.RdlDesign
             {
                 StringBuilder table = new StringBuilder("<Table>");
                 table.AppendFormat("<DataSetName>{0}</DataSetName>", this.cbDataSets.Text);
-                table.Append("<NoRows>Query returned no rows!</NoRows><Style>" +
+                table.Append("<NoRows>Record Not Founds!</NoRows><Style>" +
                     "<BorderStyle><Default>Solid</Default></BorderStyle></Style>");
 
                 table.Append("<TableColumns><TableColumn><Width>5in</Width></TableColumn></TableColumns>");
