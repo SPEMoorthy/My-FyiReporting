@@ -137,6 +137,16 @@ namespace LibRdlWpfViewer
         {
             this.reportViewer.Hide();
         }
+
+        /// <summary>
+        /// Enables/Disables the selection tool.  The selection tool allows the user
+        /// to select text and images on the display and copy it to the clipboard.
+        /// </summary>
+        public bool SelectTool
+        {
+            get { return this.reportViewer.SelectTool; }
+            set { this.reportViewer.SelectTool = value; }
+        }
     }
 
 }

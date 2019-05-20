@@ -260,6 +260,12 @@ namespace fyiReporting.RdlViewer
             Viewer.Zoom -= 0.5f;
         }
 
+
+        private void SelectToolClicked(object sender, System.EventArgs e)
+        {
+            Viewer.SelectTool = !Viewer.SelectTool;
+        }
+
         private void InitializeToolBar()
         {
             this.Items.Add(new ToolStripButton("Open", GetImage("fyiReporting.RdlViewer.Resources.document-open.png"), OpenClicked));
@@ -274,6 +280,7 @@ namespace fyiReporting.RdlViewer
             this.Items.Add(this.pageCount);
             this.Items.Add(new ToolStripButton("Zoom In", null, ZoomInClicked));
             this.Items.Add(new ToolStripButton("Zoom Out", null, ZoomOutClicked));
+            this.Items.Add(new ToolStripButton("+",null,SelectToolClicked));
         }
 
         void HandlePageNavigation(object sender, PageNavigationEventArgs e)
