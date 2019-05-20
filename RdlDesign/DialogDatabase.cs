@@ -102,7 +102,7 @@ namespace fyiReporting.RdlDesign
 		<ReportItems>
 			<Table>
 				<DataSetName>Data</DataSetName>
-				<NoRows>Query returned no rows!</NoRows>
+				<NoRows>Records Not Found!</NoRows>
 				<Style><BorderStyle><Default>Solid</Default></BorderStyle></Style>
 				<TableColumns>
 					|tablecolumns|
@@ -224,7 +224,7 @@ namespace fyiReporting.RdlDesign
 			<List>
 				<DataSetName>Data</DataSetName>
 				<Height>24pt</Height>
-				<NoRows>Query returned no rows!</NoRows>
+				<NoRows>Record Not Founds!</NoRows>
 				<ReportItems>
 					|listvalues|
 				</ReportItems>
@@ -889,6 +889,8 @@ namespace fyiReporting.RdlDesign
                 sb.AppendFormat(cinfo, "<AllowBlank>{0}</AllowBlank>", rp.AllowBlank);
                 if (rp.Prompt != null && rp.Prompt.Length > 0)
                     sb.AppendFormat(cinfo, "<Prompt>{0}</Prompt>", rp.Prompt);
+                if (rp.SearchDialog != null && rp.SearchDialog.Length > 0)
+                    sb.AppendFormat(cinfo, "<SearchDialog>{0}</SearchDialog>", rp.SearchDialog);
                 if (rp.ValidValues != null && rp.ValidValues.Count > 0)
                 {
                     sb.Append("<ValidValues><ParameterValues>");

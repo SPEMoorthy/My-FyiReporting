@@ -538,7 +538,7 @@ namespace fyiReporting.RdlDesign
             this.rdlViewer1.SourceFile = null;
             this.rdlViewer1.SourceRdl = null;
             this.rdlViewer1.UseTrueMargins = true;
-            this.rdlViewer1.Zoom = 0.6798272F;
+            this.rdlViewer1.Zoom = 0.5874903F;
             this.rdlViewer1.ZoomMode = fyiReporting.RdlViewer.ZoomEnum.FitWidth;
             // 
             // btnCancel

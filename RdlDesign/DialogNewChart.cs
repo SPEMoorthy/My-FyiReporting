@@ -59,7 +59,7 @@ namespace fyiReporting.RdlDesign
             {
                 StringBuilder chart = new StringBuilder("<Chart><Height>2in</Height><Width>4in</Width>");
                 chart.AppendFormat("<DataSetName>{0}</DataSetName>", this.cbDataSets.Text);
-                chart.Append("<NoRows>Query returned no rows!</NoRows><Style>" +
+                chart.Append("<NoRowsRecord Not Founds!</NoRows><Style>" +
                     "<BorderStyle><Default>Solid</Default></BorderStyle>" +
                     "<BackgroundColor>White</BackgroundColor>" +
                     "<BackgroundGradientType>LeftRight</BackgroundGradientType>" +

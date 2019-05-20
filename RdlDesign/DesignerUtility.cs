@@ -986,7 +986,8 @@ namespace fyiReporting.RdlDesign
 	{
 		string _Name;
 		string _Prompt;
-		string _DataType;
+        string _SearchDialog;
+        string _DataType;
 		
 		bool   _bDefault=true;				// use default value if true otherwise DataSetName
         List<string> _DefaultValue;			// list of strings
@@ -1020,7 +1021,13 @@ namespace fyiReporting.RdlDesign
 			set {_Prompt = value;}
 		}
 
-		internal string DataType
+        internal string SearchDialog
+        {
+            get { return _SearchDialog; }
+            set { _SearchDialog = value; }
+        }
+
+        internal string DataType
 		{
 			get {return _DataType;}
 			set {_DataType = value;}

@@ -91,6 +91,7 @@ namespace fyiReporting.RdlDesign
                 _Draw.SetElement(repNode, "AllowBlank", repParm.AllowBlank ? "true" : "false");
                 _Draw.SetElement(repNode, "MultiValue", repParm.MultiValue ? "true" : "false");
                 _Draw.SetElement(repNode, "Prompt", repParm.Prompt);
+                _Draw.SetElement(repNode, "SearchDialog", repParm.SearchDialog);
 
                 // Handle ValidValues
                 ApplyValidValues(repNode, repParm);
@@ -126,8 +127,9 @@ namespace fyiReporting.RdlDesign
                 string mvalue = _Draw.GetElementValue(repNode, "MultiValue", "false");
                 repParm.MultiValue = (mvalue.ToLower() == "true");
                 repParm.Prompt = _Draw.GetElementValue(repNode, "Prompt", "");
+                repParm.SearchDialog = _Draw.GetElementValue(repNode, "SearchDialog", "");
 
-				InitValidValues(repNode, repParm);
+                InitValidValues(repNode, repParm);
 
 				this.lbParameters.Items.Add(repParm);
 			}
@@ -306,7 +308,9 @@ namespace fyiReporting.RdlDesign
 			tbParmName.Text = rp.Name;
 			cbParmType.Text = rp.DataType;
 			tbParmPrompt.Text = rp.Prompt;
-			ckbParmAllowBlank.Checked = rp.AllowBlank;
+            tbParmSearchDialog.Text = rp.SearchDialog;
+
+            ckbParmAllowBlank.Checked = rp.AllowBlank;
             ckbParmMultiValue.Checked = rp.MultiValue;
             ckbParmAllowNull.Checked = rp.AllowNull;
 			// Handle default values
@@ -418,7 +422,20 @@ namespace fyiReporting.RdlDesign
 			rp.Prompt = tbParmPrompt.Text;
 		}
 
-		private void ckbParmAllowNull_CheckedChanged(object sender, System.EventArgs e)
+        private void tbParmSearchDialog_TextChanged(object sender, System.EventArgs e)
+        {
+            int cur = lbParameters.SelectedIndex;
+            if (cur < 0)
+                return;
+
+            ReportParm rp = lbParameters.Items[cur] as ReportParm;
+            if (rp == null)
+                return;
+
+            rp.SearchDialog = tbParmSearchDialog.Text;
+        }
+
+        private void ckbParmAllowNull_CheckedChanged(object sender, System.EventArgs e)
 		{
 			int cur = lbParameters.SelectedIndex;
 			if (cur < 0)
